@@ -38,6 +38,7 @@
   ],
   "scripts": {
     "dev": "yarn esno src/index.ts",
+    "convert:fields": "yarn esno scripts/convert_fields.ts",
     "typecheck": "yarn tsc --noEmit",
     "build": "cross-env NODE_OPTIONS=\"--no-warnings\" yarn rollup --configPlugin esbuild --config rollup.config.ts",
     "start": "cross-env NODE_OPTIONS=\"--no-warnings --experimental-modules --experimental-import-meta-resolve\" yarn node dist/esm/index.mjs",
