@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// GeometryCollection // - do not edit by hand.
+// GeometryCollection // - Не влезай, убьет!
 
 export interface GeometryCollection {
   bbox?:      number[];

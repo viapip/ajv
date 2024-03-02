@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// Feature // - do not edit by hand.
+// Feature // - Не влезай, убьет!
 
 export interface Feature {
   bbox?:      number[];

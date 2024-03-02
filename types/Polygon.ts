@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// Polygon // - do not edit by hand.
+// Polygon // - Не влезай, убьет!
 
 export interface Polygon {
   bbox?:       number[];

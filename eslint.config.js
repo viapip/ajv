@@ -10,6 +10,7 @@ const schema = [
     },
     rules: {
       // General
+      'eslint-comments/no-unlimited-disable': 'off',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-unused-vars': ['warn', { args: 'none' }],
       'no-use-before-define': ['error', { functions: false }],

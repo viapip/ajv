@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// MultiLineString // - do not edit by hand.
+// MultiLineString // - Не влезай, убьет!
 
 export interface MultiLineString {
   bbox?:       number[];

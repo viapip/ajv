@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// MultiPolygon // - do not edit by hand.
+// MultiPolygon // - Не влезай, убьет!
 
 export interface MultiPolygon {
   bbox?:       number[];

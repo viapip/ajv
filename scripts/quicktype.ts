@@ -31,7 +31,6 @@ await Promise.all(files.map(async (file) => {
   await writeFile(
     `types/${schemaId}.ts`,
     [
-      `/* eslint-disable eslint-comments/no-unlimited-disable */`,
       `/* eslint-disable */`,
       ...annotations,
       ...lines,

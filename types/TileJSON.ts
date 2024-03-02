@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// TileJSON // - do not edit by hand.
+// TileJSON // - Не влезай, убьет!
 
 export interface TileJSON {
   attribution?:  string;

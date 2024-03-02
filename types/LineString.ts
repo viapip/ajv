@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// LineString // - do not edit by hand.
+// LineString // - Не влезай, убьет!
 
 export interface LineString {
   bbox?:       number[];

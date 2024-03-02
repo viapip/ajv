@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// MultiPoint // - do not edit by hand.
+// MultiPoint // - Не влезай, убьет!
 
 export interface MultiPoint {
   bbox?:       number[];

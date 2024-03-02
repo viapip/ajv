@@ -65,7 +65,7 @@ export async function quicktypeJSONSchema(
     inferBooleanStrings: true,
     inferIntegerStrings: true,
 
-    leadingComments: [`${schemaId} // - do not edit by hand.`],
+    leadingComments: [`${schemaId} // - Не влезай, убьет!`],
 
     rendererOptions: {
       justTypes: true,

@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// Point // - do not edit by hand.
+// Point // - Не влезай, убьет!
 
 export interface Point {
   bbox?:       number[];

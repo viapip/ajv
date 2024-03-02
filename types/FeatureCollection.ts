@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// FeatureCollection // - do not edit by hand.
+// FeatureCollection // - Не влезай, убьет!
 
 export interface FeatureCollection {
   bbox?:    number[];

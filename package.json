@@ -3,7 +3,7 @@
   "name": "@sozdev/typescript-template",
   "type": "module",
   "version": "0.0.9",
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.1.0",
   "description": "Rollup build script",
   "author": "Alexander Semyenov <semyenov@hotmail.com>",
   "license": "MIT",

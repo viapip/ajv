@@ -1,6 +1,5 @@
-/* eslint-disable eslint-comments/no-unlimited-disable */
 /* eslint-disable */
-// Geometry // - do not edit by hand.
+// Geometry // - Не влезай, убьет!
 
 export interface Geometry {
   bbox?:       number[];
