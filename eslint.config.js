@@ -21,13 +21,13 @@ const schema = [
       'no-shadow-restricted-names': ['error'],
 
       // Stylistic
-      'curly': ['error', 'multi-line', 'consistent'],
+      'curly': ['error', 'all'],
       'newline-before-return': ['error'],
-      'newline-per-chained-call': ['error', { ignoreChainWithDepth: 1 }],
-      'multiline-ternary': ['error', 'always-multiline'],
-      'brace-style': ['error', 'stroustrup'],
-      'arrow-body-style': ['error', 'always'],
-      'eqeqeq': ['error', 'smart'],
+      'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
+      'multiline-ternary': ['error', 'always'],
+      'brace-style': ['error', '1tbs'],
+      'arrow-body-style': ['error', 'as-needed'],
+      'eqeqeq': ['error', 'always'],
     },
   },
 ]

@@ -69,6 +69,7 @@
     "listhen": "^1.7.2",
     "nanoid": "^5.0.6",
     "redis": "^4.6.13",
+    "ts-pattern": "^5.0.8",
     "ws": "^8.16.0",
     "zod": "^3.22.4"
   },
@@ -90,6 +91,6 @@
     "pre-commit": "yarn lint-staged"
   },
   "lint-staged": {
-    "./src/**/*.{ts,js,yaml,yml,json,md,mdc,vue}": "yarn lint --fix --"
+    "./{src,lib,scripts}/**/*.{ts,js,yaml,yml,json,md,mdc,vue}": "yarn lint --fix --"
   }
 }

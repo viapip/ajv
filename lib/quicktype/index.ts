@@ -17,7 +17,6 @@ export async function quicktypeJSON(
   jsonString: string,
 ) {
   const jsonInput = jsonInputForTargetLanguage(targetLanguage)
-
   await jsonInput.addSource({
     name: typeName,
     samples: [jsonString],

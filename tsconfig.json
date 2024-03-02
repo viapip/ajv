@@ -11,7 +11,8 @@
     "noResolve": false,
     "paths": {
       "~/*": ["src/*"],
-      "@/*": ["lib/*"]
+      "@/*": ["lib/*"],
+      "types/*": ["types/*"]
     },
     "resolveJsonModule": true,
     "resolvePackageJsonExports": true,

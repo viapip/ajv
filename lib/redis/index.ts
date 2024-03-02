@@ -12,9 +12,7 @@ export async function createRedisStore() {
   await connection.connect()
 
   function createCRUD<T>(prefix = '') {
-    const formatPattern = (...args: string[]) => {
-      return [prefix, ...args].join(':')
-    }
+    const formatPattern = (...args: string[]) => [prefix, ...args].join(':')
 
     const keyExists = async (id: string) => {
       const pattern = formatPattern(id)
@@ -43,7 +41,6 @@ export async function createRedisStore() {
 
     const insertOne = async (id: string, data: Omit<T, 'id'>) => {
       const pattern = formatPattern(id)
-
       const item = { ...data, id }
       await connection.json.set(pattern, '$', item)
 
@@ -52,7 +49,6 @@ export async function createRedisStore() {
 
     const findOne = async (id: string) => {
       const pattern = formatPattern(id)
-
       const item = await connection.json.get(pattern) as T
       if (!item) {
         return
@@ -61,9 +57,7 @@ export async function createRedisStore() {
       return item as T
     }
     const findMany = async (...ids: string[]) => {
-      const pattern = ids.map((id) => {
-        return formatPattern(id)
-      })
+      const pattern = ids.map(id => formatPattern(id))
       const items = await connection.json.mGet(pattern, '$')
 
       return items as T[]
@@ -76,10 +70,7 @@ export async function createRedisStore() {
       return true
     }
     const deleteMany = async (...ids: string[]) => {
-      const pattern = ids.map((id) => {
-        return formatPattern(id)
-      })
-
+      const pattern = ids.map(id => formatPattern(id))
       await connection.del(pattern)
 
       return true

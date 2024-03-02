@@ -11,7 +11,7 @@ import { transformer } from '@/transformer'
 
 import type { Router } from '~/server/router'
 
-import { WebSocketProxy } from './ws'
+import { WebSocketProxy } from './proxy'
 
 const logger = consola.withTag('client')
 

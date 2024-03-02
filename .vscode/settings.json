@@ -15,6 +15,7 @@
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
+  // "typescript.inlayHints.parameterNames.enabled": "all",
 
   "where-am-i.icon": "home",
   "where-am-i.template": "{icon} {project-name}",

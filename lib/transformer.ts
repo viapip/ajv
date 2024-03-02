@@ -4,21 +4,14 @@ import consola from 'consola'
 const logger = consola.withTag('server/trpc')
 
 function uint8ArrayToString(arr: Uint8Array) {
-  let str = ''
-  for (let i = 0; i < arr.length; i++) {
-    str += String.fromCharCode(arr[i])
-  }
-
-  return str
+  return Array.from(arr)
+    .map(byte => String.fromCharCode(byte))
+    .join('')
 }
 
 function stringToUint8Array(str: string) {
-  const arr = new Uint8Array(str.length)
-  for (let i = 0; i < str.length; i++) {
-    arr[i] = str.charCodeAt(i)
-  }
-
-  return arr
+  return new Uint8Array(Array.from(str)
+    .map(char => char.charCodeAt(0)))
 }
 
 export const transformer = {

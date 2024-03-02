@@ -22,9 +22,9 @@ export const app = createHTTPServer({
   },
 })
 
-const wss = new WebSocketServer(app)
 applyWSSHandler<Router>({
-  wss,
+  wss: new WebSocketServer(app),
+
   router,
   createContext,
   batching: { enabled: true },

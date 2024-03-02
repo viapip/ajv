@@ -1,6 +1,6 @@
 import { initTRPC } from '@trpc/server'
 
-import { transformer } from '../../lib/transformer'
+import { transformer } from '@/transformer'
 
 import type { Context } from './context'
 
