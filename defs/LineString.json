@@ -1,21 +1,17 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "MultiPoint",
-  "title": "GeoJSON MultiPoint",
+  "$id": "LineString",
+  "title": "GeoJSON LineString",
   "type": "object",
-  "required": [
-    "type",
-    "coordinates"
-  ],
+  "required": ["type", "coordinates"],
   "properties": {
     "type": {
       "type": "string",
-      "enum": [
-        "MultiPoint"
-      ]
+      "enum": ["LineString"]
     },
     "coordinates": {
       "type": "array",
+      "minItems": 2,
       "items": {
         "type": "array",
         "minItems": 2,

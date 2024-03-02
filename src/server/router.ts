@@ -1,6 +1,5 @@
-import { router } from '../trpc'
-
-import { usersRouter } from './users'
+import { usersRouter } from './modules/users'
+import { router } from './trpc'
 
 // Merge routers together
 export const appRouter = router({

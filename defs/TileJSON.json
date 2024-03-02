@@ -36,10 +36,7 @@
             "type": "integer"
           }
         },
-        "required": [
-          "id",
-          "fields"
-        ],
+        "required": ["id", "fields"],
         "additionalProperties": true
       }
     },
@@ -105,11 +102,7 @@
       "pattern": "\\d+\\.\\d+\\.\\d+\\w?[\\w\\d]*"
     }
   },
-  "required": [
-    "tilejson",
-    "tiles",
-    "vector_layers"
-  ],
+  "required": ["tilejson", "tiles", "vector_layers"],
   "additionalProperties": true,
   "$id": "TileJSON"
 }

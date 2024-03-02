@@ -4,14 +4,14 @@ import consola from 'consola'
 import { WebSocketServer } from 'ws'
 
 import { createContext } from './context'
-import { appRouter } from './router'
+import { appRouter as router } from './router'
 
 import type { AppRouter } from './router'
 
 const logger = consola.withTag('server')
 
 export const app = createHTTPServer({
-  router: appRouter,
+  router,
   createContext,
 
   batching: { enabled: true },
@@ -26,14 +26,17 @@ export const app = createHTTPServer({
 const wss = new WebSocketServer(app)
 applyWSSHandler<AppRouter>({
   wss,
-  router: appRouter,
+
+  router,
+  createContext,
+
   batching: { enabled: true },
+
   onError({ error }) {
     if (error.code === 'INTERNAL_SERVER_ERROR') {
       logger.error('Something went wrong', error)
     }
   },
-  createContext,
 })
 
 app.listen(4000)

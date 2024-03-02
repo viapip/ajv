@@ -9,6 +9,17 @@ const schema = [
       '@stylistic/ts': eslintPluginStylisticTs,
     },
     rules: {
+      // General
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      'no-unused-vars': ['warn', { args: 'none' }],
+      'no-use-before-define': ['error', { functions: false }],
+      'no-param-reassign': ['error', { props: false }],
+      'no-underscore-dangle': ['error', { allow: ['_id', '_count'] }],
+      'no-shadow': ['error', { allow: ['_id', '_count'] }],
+      'no-unused-expressions': ['error', { allowShortCircuit: true }],
+      'no-shadow-restricted-names': ['error'],
+
+      // Stylistic
       'curly': ['error', 'multi-line', 'consistent'],
       'newline-before-return': ['error'],
       'newline-per-chained-call': ['error', { ignoreChainWithDepth: 1 }],

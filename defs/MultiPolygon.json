@@ -1,29 +1,27 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "MultiLineString",
-  "title": "GeoJSON MultiLineString",
+  "$id": "MultiPolygon",
+  "title": "GeoJSON MultiPolygon",
   "type": "object",
-  "required": [
-    "type",
-    "coordinates"
-  ],
+  "required": ["type", "coordinates"],
   "properties": {
     "type": {
       "type": "string",
-      "enum": [
-        "MultiLineString"
-      ]
+      "enum": ["MultiPolygon"]
     },
     "coordinates": {
       "type": "array",
       "items": {
         "type": "array",
-        "minItems": 2,
         "items": {
           "type": "array",
-          "minItems": 2,
+          "minItems": 4,
           "items": {
-            "type": "number"
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "number"
+            }
           }
         }
       }

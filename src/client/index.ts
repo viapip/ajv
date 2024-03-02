@@ -1,75 +1,79 @@
+import process from 'node:process'
+
 import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
 import consola from 'consola'
-import { WebSocket } from 'ws'
 
 import type { AppRouter } from '~/server/router'
 import { transformer } from '~/transformer'
 
+import { WebSocketWrapperProxy } from './ws'
+
 const logger = consola.withTag('client')
 
 const wsClient = createWSClient({
+  WebSocket: WebSocketWrapperProxy as any,
   url: 'ws://localhost:4000',
-  WebSocket: WebSocket as any,
+  onOpen() {
+    logger.log('Connected')
+  },
+  onClose() {
+    logger.log('Disconnected')
+  },
 })
 
-const ws = wsClient.getConnection()
-
-ws.addEventListener(
-  'open',
-  () => {
-    logger.log('Connection opened')
-  },
-)
-ws.addEventListener(
-  'close',
-  () => {
-    logger.log('Connection closed')
-  },
-)
-ws.addEventListener(
-  'message',
-  ({ data, type }) => {
-    logger.log(type, data.toString())
-  },
-)
-ws.addEventListener(
-  'error',
-  (err) => {
-    logger.error('Connection error', err)
-  },
-)
-
-const trpc = createTRPCProxyClient<AppRouter>({
+const client = createTRPCProxyClient<AppRouter>({
   links: [wsLink({ client: wsClient })],
   transformer,
 })
 
-const users = await trpc.users.userList.query()
-logger.log('Users:', users)
-
-const createdUser = await trpc.users.userCreate.mutate({
-  name: 'Test',
-})
-logger.log('Created user:', createdUser)
-
-for (let i = 0; i < 10; i++) {
-  trpc.users.userById.query(i.toString())
-    .then((user) => {
-      logger.log('User:', user?.id)
-    })
-}
-
-trpc.users.randomNumber.subscribe(undefined, {
+const users = await client.users.userList.query()
+const subscription = client.users.randomNumber.subscribe(2, {
   onStarted() {
-    logger.log('Started')
+    logger.log('Subscription started')
   },
   onData(data) {
-    logger.log('Job done', data.status)
-  },
-  onComplete() {
-    logger.log('Complete')
+    logger.log('Subscription data', data)
   },
   onError(err) {
-    logger.error('Error', err)
+    logger.error('Subscription error', err)
+  },
+  onComplete() {
+    logger.log('Subscription ended')
   },
 })
+
+while (true) {
+  const name = await logger
+    .prompt('Enter user name: ', {
+      type: 'text',
+      required: true,
+    })
+
+  if (typeof name !== 'string') {
+    subscription.unsubscribe()
+    break
+  }
+
+  const { id } = await client.users.userCreate.mutate({
+    id: `${Math.floor(Math.random() * 1000)}`,
+    age: 30,
+    name,
+  })
+
+  // await Promise.all(
+  //   users.map(async ({ id }) => {
+  //     const user = await trpc.users.userById.query(id)
+  //     logger.log('User name:', user?.name, user?.id)
+  //   }),
+  // )
+
+  const user = await client.users.userById.query(id)
+  if (!user) {
+    continue
+  }
+
+  users.push(user)
+  logger.log('User name:', user?.name, user?.id)
+}
+
+process.exit(0)

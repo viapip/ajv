@@ -11,8 +11,12 @@ export const queue = new Queue<
       port: 6379,
     },
     defaultJobOptions: {
-      removeOnComplete: true,
-      removeOnFail: false,
+      backoff: {
+        type: 'exponential',
+        delay: 1000,
+      },
+      removeOnComplete: false,
+      // removeOnFail: false,
     },
   },
 )

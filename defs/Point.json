@@ -1,31 +1,19 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "Polygon",
-  "title": "GeoJSON Polygon",
+  "$id": "Point",
+  "title": "GeoJSON Point",
   "type": "object",
-  "required": [
-    "type",
-    "coordinates"
-  ],
+  "required": ["type", "coordinates"],
   "properties": {
     "type": {
       "type": "string",
-      "enum": [
-        "Polygon"
-      ]
+      "enum": ["Point"]
     },
     "coordinates": {
       "type": "array",
+      "minItems": 2,
       "items": {
-        "type": "array",
-        "minItems": 4,
-        "items": {
-          "type": "array",
-          "minItems": 2,
-          "items": {
-            "type": "number"
-          }
-        }
+        "type": "number"
       }
     },
     "bbox": {
