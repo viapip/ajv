@@ -11,7 +11,7 @@ const t = initTRPC
     transformer,
   })
 
-export const router = t.router
+export const rootRouter = t.router
 
 export const publicProcedure = t.procedure
 export const wsProcedure = t.procedure

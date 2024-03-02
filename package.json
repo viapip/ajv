@@ -38,14 +38,14 @@
   ],
   "scripts": {
     "dev": "yarn esno src/index.ts",
-    "convert:fields": "yarn esno scripts/convert_fields.ts",
     "typecheck": "yarn tsc --noEmit",
     "build": "cross-env NODE_OPTIONS=\"--no-warnings\" yarn rollup --configPlugin esbuild --config rollup.config.ts",
     "start": "cross-env NODE_OPTIONS=\"--no-warnings --experimental-modules --experimental-import-meta-resolve\" yarn node dist/esm/index.mjs",
     "schema": "yarn typescript-json-schema --out schema.json --skipLibCheck src/index.ts Options",
     "release": "yarn npm publish",
     "lint": "yarn eslint --config eslint.config.js",
-    "clean": "yarn exec rm -rf dist"
+    "clean": "yarn exec rm -rf dist",
+    "quicktype": "yarn esno scripts/quicktype.ts"
   },
   "dependencies": {
     "@antfu/utils": "^0.7.7",

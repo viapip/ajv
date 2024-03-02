@@ -1,9 +1,9 @@
-import { usersRouter } from './routers/users'
-import { router } from './trpc'
+import { dataRouter } from './routers/users'
+import { rootRouter } from './trpc'
 
 // Merge routers together
-export const appRouter = router({
-  users: usersRouter,
+export const router = rootRouter({
+  data: dataRouter,
 })
 
-export type AppRouter = typeof appRouter
+export type Router = typeof router

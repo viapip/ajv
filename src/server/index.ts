@@ -4,16 +4,15 @@ import consola from 'consola'
 import { WebSocketServer } from 'ws'
 
 import { createContext } from './context'
-import { appRouter as router } from './router'
+import { router } from './router'
 
-import type { AppRouter } from './router'
+import type { Router } from './router'
 
 const logger = consola.withTag('server')
 
 export const app = createHTTPServer({
   router,
   createContext,
-
   batching: { enabled: true },
 
   onError({ error }) {
@@ -24,12 +23,10 @@ export const app = createHTTPServer({
 })
 
 const wss = new WebSocketServer(app)
-applyWSSHandler<AppRouter>({
+applyWSSHandler<Router>({
   wss,
-
   router,
   createContext,
-
   batching: { enabled: true },
 
   onError({ error }) {

@@ -1,11 +1,25 @@
-import type { JTDSchemaType } from 'ajv/dist/jtd'
+import type { Point } from '~/types/Point'
 
-export const userSchema: JTDSchemaType<{
+import type { JSONSchemaType } from 'ajv'
+
+export const userSchema: JSONSchemaType<{
   name: string
-  age: number
+  age?: number
+  point?: Point
 }> = {
+  type: 'object',
   properties: {
-    name: { type: 'string' },
-    age: { type: 'int8' },
+    name: {
+      type: 'string',
+    },
+    age: {
+      type: 'number',
+      nullable: true,
+    },
+    point: {
+      $ref: 'Point',
+    },
   },
+  required: ['name'],
+  additionalProperties: false,
 }

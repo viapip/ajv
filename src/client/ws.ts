@@ -1,4 +1,3 @@
-import { sleep } from '@antfu/utils'
 import consola from 'consola'
 import { WebSocket } from 'ws'
 
@@ -50,7 +49,7 @@ export class WebSocketWrapperProxy extends WebSocket {
                 ...args: any[]
               ) => {
                 if (event === 'message') {
-                  await sleep(100)
+                  // await sleep(100)
                   logger.debug(
                     'Receiving',
                     event,
@@ -73,7 +72,7 @@ export class WebSocketWrapperProxy extends WebSocket {
               data: BufferLike,
               cb?: (error?: Error) => void,
             ) => {
-              await sleep(100)
+              // await sleep(100)
               logger.debug('Sending', data)
 
               target.send(data, cb)

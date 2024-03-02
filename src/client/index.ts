@@ -1,9 +1,13 @@
 import process from 'node:process'
 
-import { createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
+import {
+  createTRPCProxyClient,
+  createWSClient,
+  wsLink,
+} from '@trpc/client'
 import consola from 'consola'
 
-import type { AppRouter } from '~/server/router'
+import type { Router } from '~/server/router'
 import { transformer } from '~/transformer'
 
 import { WebSocketWrapperProxy } from './ws'
@@ -14,31 +18,33 @@ const wsClient = createWSClient({
   WebSocket: WebSocketWrapperProxy as any,
   url: 'ws://localhost:4000',
   onOpen() {
-    logger.log('Connected')
+    logger.info('Connected')
   },
   onClose() {
-    logger.log('Disconnected')
+    logger.info('Disconnected')
   },
 })
 
-const client = createTRPCProxyClient<AppRouter>({
+const client = createTRPCProxyClient<Router>({
   links: [wsLink({ client: wsClient })],
   transformer,
 })
 
-const users = await client.users.userList.query()
-const subscription = client.users.randomNumber.subscribe(2, {
+const n = Number.parseInt(process.argv[2] || '1', 10)
+const users = await client.data.getAll.query()
+
+const subscription = client.data.randomNumber.subscribe(n, {
   onStarted() {
-    logger.log('Subscription started')
+    logger.info('Subscription started')
   },
   onData(data) {
-    logger.log('Subscription data', data)
+    logger.success('Subscription data', data)
   },
   onError(err) {
     logger.error('Subscription error', err)
   },
   onComplete() {
-    logger.log('Subscription ended')
+    logger.info('Subscription ended')
   },
 })
 
@@ -54,26 +60,33 @@ while (true) {
     break
   }
 
-  const { id } = await client.users.userCreate.mutate({
+  const { id } = await client.data.postItem.mutate({
     id: `${Math.floor(Math.random() * 1000)}`,
-    age: 30,
-    name,
+    schemaId: 'User',
+    data: {
+      age: 30,
+      name,
+      point: {
+        type: 'Point',
+        coordinates: [0, 0],
+      },
+    },
   })
 
   // await Promise.all(
   //   users.map(async ({ id }) => {
-  //     const user = await trpc.users.userById.query(id)
-  //     logger.log('User name:', user?.name, user?.id)
+  //     const user = await client.data.getItem.query(id)
+  //     logger.info('User name:', user?.name, user?.id)
   //   }),
   // )
 
-  const user = await client.users.userById.query(id)
+  const user = await client.data.getItem.query(id)
   if (!user) {
     continue
   }
 
   users.push(user)
-  logger.log('User name:', user?.name, user?.id)
+  logger.info('User name:', user.name, user.id)
 }
 
 process.exit(0)
