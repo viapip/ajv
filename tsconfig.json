@@ -3,14 +3,14 @@
   "compilerOptions": {
     "target": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "baseUrl": "./",
-    "rootDir": "./",
+    "baseUrl": ".",
+    "rootDir": ".",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noResolve": false,
     "paths": {
-      "~/*": ["./src/*"],
-      "@/*": ["./src/*"]
+      "~/*": ["src/*"],
+      "@/*": ["lib/*"]
     },
     "resolveJsonModule": true,
     "resolvePackageJsonExports": true,
@@ -19,12 +19,12 @@
     "strict": true,
     "declaration": false,
     "importHelpers": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["./src/**/*", "src/types/**/*"]
+  "include": ["src/**/*", "lib/**/*", "scripts/**/*", "types/**/*"]
 }

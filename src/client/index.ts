@@ -10,12 +10,12 @@ import consola from 'consola'
 import type { Router } from '~/server/router'
 import { transformer } from '~/transformer'
 
-import { WebSocketWrapperProxy } from './ws'
+import { WebSocketProxy } from './ws'
 
 const logger = consola.withTag('client')
 
 const wsClient = createWSClient({
-  WebSocket: WebSocketWrapperProxy as any,
+  WebSocket: WebSocketProxy as any,
   url: 'ws://localhost:4000',
   onOpen() {
     logger.info('Connected')

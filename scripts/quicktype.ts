@@ -3,31 +3,33 @@ import { basename } from 'node:path'
 
 import consola from 'consola'
 import glob from 'fast-glob'
+import { TypeScriptTargetLanguage } from 'quicktype-core'
 
-import { quicktypeJSONSchema } from '../src/lib/quicktype'
+import { quicktypeJSONSchema } from '@/quicktype'
 
 const logger = consola.withTag('generate')
 
+const lang = new TypeScriptTargetLanguage()
 const files = await glob('*.json', {
   cwd: 'defs',
   absolute: true,
 })
 
 await Promise.all(files.map(async (file) => {
-  const typeName = basename(file, '.json')
+  const fileContent = await readFile(file, 'utf8')
+  const schemaId = basename(file, '.json')
 
-  const jsonString = await readFile(file, 'utf8')
   const {
     lines,
     annotations,
   } = await quicktypeJSONSchema(
-    'typescript',
-    typeName,
-    jsonString,
+    lang,
+    schemaId,
+    fileContent,
   )
 
   await writeFile(
-    `src/types/${typeName}.ts`,
+    `types/${schemaId}.ts`,
     [
       `/* eslint-disable eslint-comments/no-unlimited-disable */`,
       `/* eslint-disable */`,
@@ -40,5 +42,5 @@ await Promise.all(files.map(async (file) => {
     },
   )
 
-  logger.success(`Generated ${typeName}.ts`)
+  logger.success(`Generated ${schemaId}.ts`)
 }))

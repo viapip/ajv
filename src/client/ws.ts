@@ -1,3 +1,4 @@
+import { sleep } from '@antfu/utils'
 import consola from 'consola'
 import { WebSocket } from 'ws'
 
@@ -24,7 +25,7 @@ type BufferLike =
     | { valueOf(): string }
     | { [Symbol.toPrimitive](hint: string): string }
 
-export class WebSocketWrapperProxy extends WebSocket {
+export class WebSocketProxy extends WebSocket {
   constructor(
     address: string | URL,
     protocols?: string | string[],
@@ -38,52 +39,28 @@ export class WebSocketWrapperProxy extends WebSocket {
           case 'on':
             return (
               event: string,
-              listener: (
-                this: WebSocket,
-                data: BufferLike,
-                ...args: any[]
-              ) => void,
+              listener: (this: WebSocket, data: BufferLike, ...args: any[]) => void,
             ) => {
-              const wrapper = async (
-                data: BufferLike,
-                ...args: any[]
-              ) => {
+              target.on(event, async (data: BufferLike, ...args: any[]) => {
                 if (event === 'message') {
-                  // await sleep(100)
-                  logger.debug(
-                    'Receiving',
-                    event,
-                    JSON.parse(data.toString()),
-                  )
+                  await sleep(100)
+                  logger.debug('Receiving', event, JSON.parse(data.toString()))
                 }
 
-                listener.call(
-                  target,
-                  data,
-                  ...args,
-                )
-              }
-
-              target.on(event, wrapper)
+                listener.call(target, data, ...args)
+              })
             }
 
           case 'send':
-            return async (
-              data: BufferLike,
-              cb?: (error?: Error) => void,
-            ) => {
-              // await sleep(100)
+            return async (data: BufferLike, cb?: (error?: Error) => void) => {
+              await sleep(100)
               logger.debug('Sending', data)
 
               target.send(data, cb)
             }
         }
 
-        return Reflect.get(
-          target,
-          prop,
-          receiver,
-        )
+        return Reflect.get(target, prop, receiver)
       },
     })
   }

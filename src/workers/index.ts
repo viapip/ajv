@@ -9,10 +9,10 @@ const worker = new Worker<
 { status: number }
 >('appQueue',
   async (job) => {
-    logger.info('Job received', JSON.stringify(job.data, null, 2))
+    logger.info('Job received', job.data)
 
     if (job.data.message === 'error') {
-      throw new Error(`User name should not be ${job.data.message}`)
+      throw new Error(`No one likes ${job.data.message}s`)
     }
 
     if (Number.parseInt(job.id || '0') % 5 === 0) {
@@ -31,9 +31,9 @@ const worker = new Worker<
 )
 
 worker.on('completed', (job) => {
-  logger.success('Job completed', JSON.stringify(job.returnvalue, null, 2))
+  logger.success('Job completed', job.returnvalue)
 })
 
 worker.on('failed', (job, err) => {
-  logger.error('Job failed', job?.data, err)
+  logger.error(err, job?.data)
 })

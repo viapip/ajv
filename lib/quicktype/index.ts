@@ -33,7 +33,7 @@ export async function quicktypeJSON(
 }
 
 export async function quicktypeJSONSchema(
-  lang: string,
+  lang: string | TargetLanguage,
   typeName: string,
   jsonSchemaString: string,
 ) {

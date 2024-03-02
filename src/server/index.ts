@@ -17,7 +17,7 @@ export const app = createHTTPServer({
 
   onError({ error }) {
     if (error.code === 'INTERNAL_SERVER_ERROR') {
-      logger.error('Something went wrong', error)
+      logger.error(error)
     }
   },
 })
@@ -31,7 +31,7 @@ applyWSSHandler<Router>({
 
   onError({ error }) {
     if (error.code === 'INTERNAL_SERVER_ERROR') {
-      logger.error('Something went wrong', error)
+      logger.error(error)
     }
   },
 })
