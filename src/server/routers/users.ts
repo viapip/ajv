@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { publicProcedure, router } from '../trpc'
 
-import { queueEvents } from '~/server/lib/queue/events'
+import { queueEvents } from '~/lib/bullmq/events'
 
 const logger = consola.withTag('server')
 
@@ -30,13 +30,13 @@ export const usersRouter = router({
       name: z.string(),
       age: z.number(),
     }))
-    .mutation(async ({ input, ctx: { redis, ajv, queue } }) => {
+    .mutation(async ({ input, ctx: { redis, ajv, bullmq } }) => {
       const { id, ...data } = input
 
       ajv.validateSchema('user', data)
       const user = await redis.users.insertOne(id, data)
 
-      const job = await queue.add('appQueue', { message: input.name })
+      const job = await bullmq.add('appQueue', { message: input.name })
       logger.log('Job added', job.id)
       const result = await job.waitUntilFinished(queueEvents)
       logger.log('Job result', result)
@@ -49,10 +49,10 @@ export const usersRouter = router({
 
   randomNumber: publicProcedure
     .input(z.number())
-    .subscription(async ({ input, ctx: { queue } }) => {
+    .subscription(async ({ input, ctx: { bullmq } }) => {
       return observable<{ status: number }>((emit) => {
         queueEvents.on('completed', async ({ jobId }) => {
-          const job = await queue.getJob(jobId)
+          const job = await bullmq.getJob(jobId)
           if (!job) {
             return
           }

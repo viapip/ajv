@@ -15,7 +15,7 @@ const worker = new Worker<
       throw new Error(`User name should not be ${job.data.message}`)
     }
 
-    if (Number.parseInt(job.id || '0') % 3 === 0) {
+    if (Number.parseInt(job.id || '0') % 5 === 0) {
       await sleep(1000)
     }
 

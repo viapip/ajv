@@ -26,14 +26,12 @@ type BufferLike =
     | { [Symbol.toPrimitive](hint: string): string }
 
 export class WebSocketWrapperProxy extends WebSocket {
-  public binaryType: 'nodebuffer' | 'arraybuffer' | 'fragments' = 'arraybuffer'
-
   constructor(
-    url: string,
+    address: string | URL,
     protocols?: string | string[],
     options?: ClientOptions,
   ) {
-    super(url, protocols, options)
+    super(address, protocols, options)
 
     return new Proxy(this, {
       get: (target, prop, receiver) => {
@@ -47,20 +45,34 @@ export class WebSocketWrapperProxy extends WebSocket {
                 ...args: any[]
               ) => void,
             ) => {
-              const wrapper = async (data: BufferLike, ...args: any[]) => {
+              const wrapper = async (
+                data: BufferLike,
+                ...args: any[]
+              ) => {
                 if (event === 'message') {
                   await sleep(100)
-                  logger.debug('Receiving', event, JSON.parse(data.toString()))
+                  logger.debug(
+                    'Receiving',
+                    event,
+                    JSON.parse(data.toString()),
+                  )
                 }
 
-                listener.call(target, data, ...args)
+                listener.call(
+                  target,
+                  data,
+                  ...args,
+                )
               }
 
               target.on(event, wrapper)
             }
 
           case 'send':
-            return async (data: BufferLike, cb?: (error?: Error) => void) => {
+            return async (
+              data: BufferLike,
+              cb?: (error?: Error) => void,
+            ) => {
               await sleep(100)
               logger.debug('Sending', data)
 
@@ -68,7 +80,11 @@ export class WebSocketWrapperProxy extends WebSocket {
             }
         }
 
-        return Reflect.get(target, prop, receiver)
+        return Reflect.get(
+          target,
+          prop,
+          receiver,
+        )
       },
     })
   }

@@ -1,4 +1,4 @@
-import { usersRouter } from './modules/users'
+import { usersRouter } from './routers/users'
 import { router } from './trpc'
 
 // Merge routers together

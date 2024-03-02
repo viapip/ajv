@@ -1,6 +1,6 @@
-import { createAjv } from '~/server/lib/ajv'
-import { queue } from '~/server/lib/queue'
-import { createRedisStore } from '~/server/lib/redis'
+import { createAjv } from '~/lib/ajv'
+import { bullmq } from '~/lib/bullmq'
+import { createRedisStore } from '~/lib/redis'
 
 import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone'
 import type { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws'
@@ -16,6 +16,6 @@ export async function createContext(
   return {
     ajv,
     redis,
-    queue,
+    bullmq,
   }
 }
