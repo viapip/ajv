@@ -10,7 +10,7 @@ import { quicktypeJSONSchema } from '@/quicktype'
 const logger = consola.withTag('generate')
 
 const lang = new TypeScriptTargetLanguage()
-const files = await glob('*.json', {
+const files = await glob('**/*.json', {
   cwd: 'defs',
   absolute: true,
 })
@@ -42,5 +42,5 @@ await Promise.all(files.map(async (file) => {
     },
   )
 
-  logger.success(`Generated ${schemaId}.ts`)
+  logger.success(`${schemaId}.ts`)
 }))

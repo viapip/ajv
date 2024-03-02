@@ -1,4 +1,4 @@
-import { dataRouter } from './routers/users'
+import { dataRouter } from './routers/data'
 import { rootRouter } from './trpc'
 
 // Merge routers together

@@ -13,9 +13,7 @@ export const dataRouter = rootRouter({
     .query(async ({
       ctx: { redis },
     }) => {
-      const users = await redis.users.getAll()
-
-      return users
+      return redis.users.getAll()
     }),
 
   getItem: publicProcedure
@@ -24,9 +22,7 @@ export const dataRouter = rootRouter({
       input: id,
       ctx: { redis },
     }) => {
-      const item = await redis.users.findOne(id)
-
-      return item
+      return redis.users.findOne(id)
     }),
 
   postItem: publicProcedure
@@ -40,7 +36,6 @@ export const dataRouter = rootRouter({
       ctx: { redis, ajv, bullmq },
     }) => {
       ajv.validateSchema(schemaId, data)
-
       const job = await bullmq.add(
         'appQueue',
         { message: data.name },
@@ -50,12 +45,7 @@ export const dataRouter = rootRouter({
       const returnvalue = await job.waitUntilFinished(queueEvents)
       logger.success(`Job ${job.id} result:`, returnvalue)
 
-      const item = await redis.users.insertOne(id, data)
-
-      return {
-        ...item,
-        id,
-      }
+      return redis.users.insertOne(id, data)
     }),
 
   randomNumber: publicProcedure

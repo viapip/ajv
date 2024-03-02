@@ -7,14 +7,15 @@ import {
 } from '@trpc/client'
 import consola from 'consola'
 
+import { transformer } from '@/transformer'
+
 import type { Router } from '~/server/router'
-import { transformer } from '~/transformer'
 
 import { WebSocketProxy } from './ws'
 
 const logger = consola.withTag('client')
 
-const wsClient = createWSClient({
+const ws = createWSClient({
   WebSocket: WebSocketProxy as any,
   url: 'ws://localhost:4000',
   onOpen() {
@@ -26,11 +27,11 @@ const wsClient = createWSClient({
 })
 
 const client = createTRPCProxyClient<Router>({
-  links: [wsLink({ client: wsClient })],
+  links: [wsLink({ client: ws })],
   transformer,
 })
 
-const n = Number.parseInt(process.argv[2] || '1', 10)
+const n = Number.parseInt(process.argv[2], 10) || 1
 const users = await client.data.getAll.query()
 
 const subscription = client.data.randomNumber.subscribe(n, {
@@ -49,6 +50,13 @@ const subscription = client.data.randomNumber.subscribe(n, {
 })
 
 while (true) {
+  // await Promise.all(
+  //   users.map(async ({ id }) => {
+  //     const user = await client.data.getItem.query(id)
+  //     logger.info('User name:', user?.name, user?.id)
+  //   }),
+  // )
+
   const name = await logger
     .prompt('Enter user name: ', {
       type: 'text',
@@ -73,20 +81,11 @@ while (true) {
     },
   })
 
-  // await Promise.all(
-  //   users.map(async ({ id }) => {
-  //     const user = await client.data.getItem.query(id)
-  //     logger.info('User name:', user?.name, user?.id)
-  //   }),
-  // )
-
   const user = await client.data.getItem.query(id)
-  if (!user) {
-    continue
+  if (user) {
+    users.push(user)
+    logger.info('User', user)
   }
-
-  users.push(user)
-  logger.info('User name:', user.name, user.id)
 }
 
 process.exit(0)

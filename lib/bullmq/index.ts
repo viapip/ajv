@@ -1,6 +1,5 @@
 import { Queue } from 'bullmq'
 
-// Create a new Queue
 export const bullmq = new Queue<
 { message: string },
 { status: number }
@@ -16,7 +15,7 @@ export const bullmq = new Queue<
         delay: 1000,
       },
       removeOnComplete: false,
-      // removeOnFail: false,
+      removeOnFail: false,
     },
   },
 )

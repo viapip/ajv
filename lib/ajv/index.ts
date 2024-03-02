@@ -34,14 +34,15 @@ export async function createAjv() {
     absolute: true,
   })
 
-  await Promise.all(files.map(async (file) => {
+  const schemas = await Promise.all(files.map(async (file) => {
     const fileContent = await readFile(file, 'utf8')
     const schemaId = basename(file, '.json')
     const schema = JSON.parse(fileContent) as AnySchemaObject
 
-    ajv.addSchema(schema, schemaId)
+    return { ...schema, $id: schemaId }
   }))
 
+  ajv.addSchema(schemas)
   ajv.addSchema(userSchema, 'User')
 
   function validateSchema(schemaId: string, data: unknown) {
