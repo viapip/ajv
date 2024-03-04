@@ -1,5 +1,5 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Point } from 'types/Point'
+import type { Point } from 'types'
 
 export const userSchema: JSONSchemaType<{
   name: string
