@@ -3,7 +3,10 @@ import { basename } from 'node:path'
 
 import consola from 'consola'
 import glob from 'fast-glob'
-import { FetchingJSONSchemaStore, InputData, JSONSchemaInput, TypeScriptTargetLanguage, quicktypeMultiFile } from 'quicktype-core'
+import { TypeScriptTargetLanguage } from 'quicktype-core'
+
+import type { IQucktypeData } from '@/quicktype'
+import { quicktypeMultipleJSONSchema } from '@/quicktype'
 
 const logger = consola.withTag('generate')
 const lang = new TypeScriptTargetLanguage()
@@ -13,25 +16,31 @@ const files = await glob('**/*.json', {
   absolute: true,
 })
 
-const inputData = new InputData()
-
-const jsonInput = new JSONSchemaInput(new FetchingJSONSchemaStore())
+const data: IQucktypeData[] = []
 
 await Promise.all(files.map(async (file) => {
   const fileContent = await readFile(file, 'utf8')
   const schemaId = basename(file, '.json')
-
-  await jsonInput.addSource({
-    name: schemaId,
-    schema: fileContent,
+  data.push({
+    typeName: schemaId,
+    jsonString: fileContent,
   })
 }))
 
-inputData.addInput(jsonInput)
-const filesRendered = await quicktypeMultiFile({
-  inputData,
-  lang,
-  outputFilename: 'index',
+// inputData.addInput(jsonInput)
+// const filesRendered = await quicktypeMultiFile({
+//   inputData,
+//   lang,
+//   outputFilename: 'index',
+//   rendererOptions: {
+//     'just-types': true,
+//     'prefer-types': true,
+//     'prefer-unions': true,
+//     'declare-unions': true,
+//   },
+// })
+
+const filesRendered = await quicktypeMultipleJSONSchema(lang, data, {
   rendererOptions: {
     'just-types': true,
     'prefer-types': true,

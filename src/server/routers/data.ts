@@ -12,24 +12,20 @@ export const dataRouter = rootRouter({
   getAll: publicProcedure
     .query(async ({
       ctx: { redis },
-    }) => {
-      return redis.users.getAll()
-    }),
+    }) => redis.data.getAll()),
 
   getItem: publicProcedure
     .input(z.string())
     .query(async ({
       input: id,
       ctx: { redis },
-    }) => {
-      return redis.users.findOne(id)
-    }),
+    }) => redis.data.findOne(id)),
 
   postItem: publicProcedure
     .input(z.object({
       id: z.string(),
       schemaId: z.string(),
-      data: z.any(),
+      data: z.unknown(),
     }))
     .mutation(async ({
       input: { id, schemaId, data },
@@ -38,14 +34,14 @@ export const dataRouter = rootRouter({
       ajv.validateSchema(schemaId, data)
       const job = await bullmq.add(
         'appQueue',
-        { message: data.name },
+        { message: JSON.stringify(data) },
       )
 
       logger.info(`Job ${job.id} added:`, JSON.stringify(data, null, 2))
       const returnvalue = await job.waitUntilFinished(queueEvents)
       logger.success(`Job ${job.id} result:`, returnvalue)
 
-      return redis.users.insertOne(id, data)
+      return redis.data.insertOne(id, data)
     }),
 
   randomNumber: publicProcedure
@@ -53,21 +49,19 @@ export const dataRouter = rootRouter({
     .subscription(async ({
       input: n,
       ctx: { bullmq },
-    }) => {
-      return observable<{ status: number }>((emit) => {
-        queueEvents.on('completed', async ({ jobId }) => {
-          const job = await bullmq.getJob(jobId)
-
-          if (
-            job
+    }) => observable<{ status: number }>((emit) => {
+      queueEvents.on('completed', async ({ jobId }) => {
+        logger.info(`Job ${jobId} completed`)
+        const job = await bullmq.getJob(jobId)
+        if (
+          job
             && job.returnvalue
             && job.returnvalue.status % n === 0
-          ) {
-            emit.next(job.returnvalue)
-          }
-        })
+        ) {
+          emit.next(job.returnvalue)
+        }
       })
-    }),
+    })),
 })
 
 export type DataRouter = typeof dataRouter

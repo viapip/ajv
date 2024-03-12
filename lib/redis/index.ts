@@ -1,17 +1,17 @@
 // import consola from 'consola'
 import { createClient } from 'redis'
 
-export interface User {
-  id: string
-  name: string
-  age: number
-}
+// export interface User {
+//   id: string
+//   name: string
+//   age: number
+// }
 
 export async function createRedisStore() {
   const connection = createClient({ url: 'redis://redis:6379' })
   await connection.connect()
 
-  function createCRUD<T>(prefix = '') {
+  function createCRUD<T = unknown>(prefix = '') {
     const formatPattern = (...args: string[]) => [prefix, ...args].join(':')
 
     const keyExists = async (id: string) => {
@@ -39,7 +39,7 @@ export async function createRedisStore() {
       return items.flat() as T[]
     }
 
-    const insertOne = async (id: string, data: Omit<T, 'id'>) => {
+    const insertOne = async (id: string, data: T) => {
       const pattern = formatPattern(id)
       const item = { ...data, id }
       await connection.json.set(pattern, '$', item)
@@ -92,5 +92,5 @@ export async function createRedisStore() {
     }
   }
 
-  return { users: createCRUD<User>('user') }
+  return { data: createCRUD('data') }
 }

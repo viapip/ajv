@@ -8,10 +8,11 @@ import {
 import consola from 'consola'
 
 import { transformer } from '@/transformer'
+import { WebSocketProxy } from '@/ws/client'
 
 import type { Router } from '~/server/router'
 
-import { WebSocketProxy } from './proxy'
+// import { WebSocketProxy } from './proxy'
 
 const logger = consola.withTag('client')
 
@@ -64,6 +65,7 @@ while (true) {
     })
 
   if (typeof name !== 'string') {
+    console.log('Invalid name')
     subscription.unsubscribe()
     break
   }
@@ -72,14 +74,13 @@ while (true) {
     id: `${Math.floor(Math.random() * 1000)}`,
     schemaId: 'User',
     data: {
-      age: 30,
-      name,
-      point: {
-        type: 'Point',
-        coordinates: [0, 0],
+      status: 'active',
+      info: {
+        name,
+        email: `${name}@example.com`,
       },
     },
-  })
+  }) as { id: string }
 
   const user = await client.data.getItem.query(id)
   if (user) {
