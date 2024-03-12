@@ -1,7 +1,8 @@
 import { createHTTPServer } from '@trpc/server/adapters/standalone'
 import { applyWSSHandler } from '@trpc/server/adapters/ws'
 import consola from 'consola'
-import { WebSocketServer } from 'ws'
+
+import { WebSocketProxy } from '@/ws/server'
 
 import { createContext } from './context'
 import { router } from './router'
@@ -23,7 +24,7 @@ export const app = createHTTPServer({
 })
 
 applyWSSHandler<Router>({
-  wss: new WebSocketServer(app),
+  wss: new WebSocketProxy(app),
 
   router,
   createContext,

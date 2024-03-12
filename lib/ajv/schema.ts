@@ -1,24 +1,19 @@
 import type { JSONSchemaType } from 'ajv'
-import type { Point } from 'types/Point'
+import type { TestUserInfo } from 'types'
 
 export const userSchema: JSONSchemaType<{
-  name: string
-  age?: number
-  point?: Point
+  status: string
+  info?: TestUserInfo
 }> = {
   type: 'object',
   properties: {
-    name: {
+    status: {
       type: 'string',
     },
-    age: {
-      type: 'number',
-      nullable: true,
-    },
-    point: {
-      $ref: 'Point',
+    info: {
+      $ref: 'TestUserInfo',
     },
   },
-  required: ['name'],
+  required: ['status'],
   additionalProperties: false,
 }

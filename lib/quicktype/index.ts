@@ -3,74 +3,41 @@ import {
   FetchingJSONSchemaStore,
   InputData,
   JSONSchemaInput,
-  jsonInputForTargetLanguage,
-  quicktype,
+  quicktypeMultiFile,
 } from 'quicktype-core'
 
 import type {
+  Options,
   TargetLanguage,
 } from 'quicktype-core'
 
-export async function quicktypeJSON(
-  targetLanguage: TargetLanguage,
-  typeName: string,
-  jsonString: string,
-) {
-  const jsonInput = jsonInputForTargetLanguage(targetLanguage)
-  await jsonInput.addSource({
-    name: typeName,
-    samples: [jsonString],
-  })
-
-  const inputData = new InputData()
-  inputData.addInput(jsonInput)
-
-  return await quicktype({
-    inputData,
-    lang: targetLanguage,
-  })
+export interface IQucktypeData {
+  typeName: string
+  jsonString: string
 }
 
-export async function quicktypeJSONSchema(
-  lang: string | TargetLanguage,
-  schemaId: string,
-  jsonSchemaString: string,
+export async function quicktypeMultipleJSONSchema(
+  targetLanguage: string | TargetLanguage,
+  data: IQucktypeData[],
+  options: Omit<Partial<Options>, 'inputData'>,
 ) {
-  const schemaInput = new JSONSchemaInput(
-    new FetchingJSONSchemaStore(),
-    [],
-  )
-
-  await schemaInput.addSource({
-    name: schemaId,
-    schema: jsonSchemaString,
-  })
-
   const inputData = new InputData()
-  inputData.addInput(schemaInput)
 
-  return quicktype({
-    lang,
+  const jsonInput = new JSONSchemaInput(new FetchingJSONSchemaStore())
+
+  for (const { typeName, jsonString } of data) {
+    await jsonInput.addSource({
+      name: typeName,
+      schema: jsonString,
+    })
+  }
+
+  inputData.addInput(jsonInput)
+
+  return quicktypeMultiFile({
     inputData,
-
-    indentation: '  ',
-    alphabetizeProperties: true,
-    combineClasses: true,
-
-    inferEnums: false,
-    inferMaps: true,
-    inferUuids: true,
-    inferDateTimes: true,
-    inferBooleanStrings: true,
-    inferIntegerStrings: true,
-
-    leadingComments: [`${schemaId} // - Не влезай, убьет!`],
-
-    rendererOptions: {
-      justTypes: true,
-      preferTypes: true,
-      preferUnions: true,
-      declareUnions: true,
-    },
+    lang: targetLanguage,
+    outputFilename: 'index',
+    ...options,
   })
 }
