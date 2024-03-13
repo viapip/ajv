@@ -5,8 +5,8 @@ import consola from 'consola'
 const logger = consola.withTag('worker')
 
 const worker = new Worker<
-{ message: string },
-{ status: number }
+  { message: string },
+  { status: number }
 >('appQueue',
   async (job) => {
     logger.info('Job received', job.data)

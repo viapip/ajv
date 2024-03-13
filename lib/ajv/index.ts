@@ -67,6 +67,7 @@ export async function createAjv() {
 
   return {
     addSchema: ajv.addSchema,
+    getSchema: ajv.getSchema,
     validateSchema,
   }
 }

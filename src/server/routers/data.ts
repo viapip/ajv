@@ -55,8 +55,8 @@ export const dataRouter = rootRouter({
         const job = await bullmq.getJob(jobId)
         if (
           job
-            && job.returnvalue
-            && job.returnvalue.status % n === 0
+          && job.returnvalue
+          && job.returnvalue.status % n === 0
         ) {
           emit.next(job.returnvalue)
         }
