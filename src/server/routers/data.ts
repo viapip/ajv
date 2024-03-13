@@ -38,8 +38,8 @@ export const dataRouter = rootRouter({
       )
 
       logger.info(`Job ${job.id} added:`, JSON.stringify(data, null, 2))
-      const returnvalue = await job.waitUntilFinished(queueEvents)
-      logger.success(`Job ${job.id} result:`, returnvalue)
+      // const returnvalue = await job.waitUntilFinished(queueEvents)
+      // logger.success(`Job ${job.id} result:`, returnvalue)
 
       return redis.data.insertOne(id, data)
     }),
@@ -55,8 +55,8 @@ export const dataRouter = rootRouter({
         const job = await bullmq.getJob(jobId)
         if (
           job
-            && job.returnvalue
-            && job.returnvalue.status % n === 0
+          && job.returnvalue
+          && job.returnvalue.status % n === 0
         ) {
           emit.next(job.returnvalue)
         }
