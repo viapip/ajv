@@ -8,22 +8,22 @@ import type { ClientOptions } from 'ws'
 const logger = consola.withTag('client/ws')
 
 type BufferLike =
-    | string
-    | Buffer
-    | DataView
-    | number
-    | ArrayBufferView
-    | Uint8Array
-    | ArrayBuffer
-    | SharedArrayBuffer
-    | readonly any[]
-    | readonly number[]
-    | { valueOf(): ArrayBuffer }
-    | { valueOf(): SharedArrayBuffer }
-    | { valueOf(): Uint8Array }
-    | { valueOf(): readonly number[] }
-    | { valueOf(): string }
-    | { [Symbol.toPrimitive](hint: string): string }
+  | string
+  | Buffer
+  | DataView
+  | number
+  | ArrayBufferView
+  | Uint8Array
+  | ArrayBuffer
+  | SharedArrayBuffer
+  | readonly any[]
+  | readonly number[]
+  | { valueOf(): ArrayBuffer }
+  | { valueOf(): SharedArrayBuffer }
+  | { valueOf(): Uint8Array }
+  | { valueOf(): readonly number[] }
+  | { valueOf(): string }
+  | { [Symbol.toPrimitive](hint: string): string }
 
 export class WebSocketProxy extends WebSocket {
   constructor(

@@ -44,6 +44,8 @@ export async function createAjv() {
 
   ajv.addSchema(schemas)
   ajv.addSchema(userSchema, 'User')
+  // const test = ajv.getSchema('User')
+  // logger.info(test?.schemaEnv)
 
   function validateSchema(schemaId: string, data: unknown) {
     const valid = ajv.validate(schemaId, data)

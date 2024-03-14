@@ -1,7 +1,7 @@
 import { decode, encode } from '@msgpack/msgpack'
 import consola from 'consola'
 
-const logger = consola.withTag('server/trpc')
+const logger = consola.withTag('server/trpc/transformer')
 
 function uint8ArrayToString(arr: Uint8Array) {
   return Array.from(arr)

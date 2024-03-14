@@ -45,19 +45,20 @@ export class WebSocketProxy<
     return this.getProxy(this)
   }
 
-  private getWrappedMethod<S>(target: S, prop: string) {
+  private getWrappedMethod<S extends WebSocketServer | WebSocket>(target: S, prop: string) {
     const methods = {
       on: this.customOn.bind(target),
       send: this.customSend.bind(target),
+      emit: this.customSend.bind(target),
     } as Record<string, (...args: any[]) => void>
 
     return methods[prop]
   }
 
-  private getProxy<S extends object>(t: S) {
+  private getProxy<S extends WebSocketServer | WebSocket>(t: S) {
     return new Proxy(t, {
       get: (target, prop, receiver) => {
-        if (prop === 'on') {
+        if (prop === 'on' || prop === 'send') {
           return this.getWrappedMethod(target, prop)
         }
 
@@ -71,18 +72,21 @@ export class WebSocketProxy<
     listener: (this: WebSocketServer, ...args: any[]) => void,
   ) {
     this.on(event, async (...args: any[]) => {
+      logger.info('Received', event)
       if (event === 'connection') {
         const arg = args as [socket: InstanceType<T>, request: InstanceType<U>]
         const ws = this.getProxy(arg[0])
         arg[0] = ws
 
         listener.call(this, ...arg)
+
+        return
       }
 
       if (event === 'message') {
         await sleep(100)
         logger.info('Receiving', event, JSON.parse(args[0] as string))
-        logger.debug('Receiving', event, JSON.parse(args[0] as string))
+        // logger.debug('Receiving', event, JSON.parse(args[0] as string))
         const [data, isBinary] = args as [BufferLike, boolean]
         listener.call(this, data, isBinary)
 
@@ -93,10 +97,17 @@ export class WebSocketProxy<
     })
   }
 
-  private async customSend(event: string | symbol, data: BufferLike) {
+  private async customSend(
+    this: WebSocket | WebSocketServer,
+    data: BufferLike,
+    cb?: (error?: Error) => void,
+  ) {
     await sleep(100)
-    logger.info('Sending', event)
-    logger.debug('Sending', event)
-    this.emit(event, data)
+
+    logger.debug('Sending', data)
+
+    if ('send' in this) {
+      return this.send(data, cb)
+    }
   }
 }
