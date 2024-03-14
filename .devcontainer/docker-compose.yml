@@ -26,5 +26,17 @@ services:
       - redis-data:/data
     command: dragonfly --default_lua_flags=allow-undeclared-keys
 
+  mongodb:
+    image: mongo:7.0.6
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
 volumes:
   redis-data:
+  mongodb-data:

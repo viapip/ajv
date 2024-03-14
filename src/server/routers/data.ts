@@ -1,3 +1,5 @@
+import { EventEmitter } from 'node:events'
+
 import { observable } from '@trpc/server/observable'
 import consola from 'consola'
 import { z } from 'zod'
@@ -6,8 +8,10 @@ import { publicProcedure, rootRouter } from '../trpc'
 
 import { queueEvents } from '@/bullmq/events'
 
-const logger = consola.withTag('server')
+import type { Document, OptionalId } from 'mongodb'
 
+const logger = consola.withTag('server')
+const ee = new EventEmitter()
 export const dataRouter = rootRouter({
   getAll: publicProcedure
     .query(async ({
@@ -16,6 +20,7 @@ export const dataRouter = rootRouter({
 
   getItem: publicProcedure
     .input(z.string())
+    // .use(loggerMiddleware)
     .query(async ({
       input: id,
       ctx: { redis },
@@ -28,8 +33,8 @@ export const dataRouter = rootRouter({
       data: z.unknown(),
     }))
     .mutation(async ({
-      input: { id, schemaId, data },
-      ctx: { redis, ajv, bullmq },
+      input: { schemaId, data },
+      ctx: { redis, ajv, bullmq, mongodb },
     }) => {
       ajv.validateSchema(schemaId, data)
       const job = await bullmq.add(
@@ -38,10 +43,12 @@ export const dataRouter = rootRouter({
       )
 
       logger.info(`Job ${job.id} added:`, JSON.stringify(data, null, 2))
-      const returnvalue = await job.waitUntilFinished(queueEvents)
-      logger.success(`Job ${job.id} result:`, returnvalue)
+      // const returnvalue = await job.waitUntilFinished(queueEvents)
+      // logger.success(`Job ${job.id} result:`, returnvalue)
+      const { insertedId } = await mongodb.data.insertOne(data as OptionalId<Document>)
+      logger.info('insertedId:', insertedId.toJSON())
 
-      return redis.data.insertOne(id, data)
+      return redis.data.insertOne(insertedId.toJSON(), data)
     }),
 
   randomNumber: publicProcedure
@@ -50,8 +57,13 @@ export const dataRouter = rootRouter({
       input: n,
       ctx: { bullmq },
     }) => observable<{ status: number }>((emit) => {
+      logger.info(`subscription: Running subscription with n = ${n}`)
+      const onData = (data: any) => {
+        emit.next(data)
+      }
+      ee.on('onData', onData)
       queueEvents.on('completed', async ({ jobId }) => {
-        logger.info(`Job ${jobId} completed`)
+        logger.info(`subscription: Job ${jobId} completed`)
         const job = await bullmq.getJob(jobId)
         if (
           job

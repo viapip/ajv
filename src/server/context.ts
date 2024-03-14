@@ -1,5 +1,6 @@
 import { createAjv } from '@/ajv'
 import { bullmq } from '@/bullmq'
+import { createMongoDBStore } from '@/mongo'
 import { createRedisStore } from '@/redis'
 
 import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone'
@@ -12,6 +13,7 @@ export type CreateContextOptions =
 
 const ajv = await createAjv()
 const redis = await createRedisStore()
+const mongodb = await createMongoDBStore()
 
 export async function createContext(
   _opts: CreateContextOptions,
@@ -20,5 +22,6 @@ export async function createContext(
     ajv,
     redis,
     bullmq,
+    mongodb,
   }
 }

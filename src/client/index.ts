@@ -65,12 +65,12 @@ while (true) {
     })
 
   if (typeof name !== 'string') {
-    console.log('Invalid name')
+    logger.info('Invalid name')
     subscription.unsubscribe()
     break
   }
 
-  const { id } = await client.data.postItem.mutate({
+  const { _id } = await client.data.postItem.mutate({
     id: `${Math.floor(Math.random() * 1000)}`,
     schemaId: 'User',
     data: {
@@ -80,9 +80,9 @@ while (true) {
         email: `${name}@example.com`,
       },
     },
-  }) as { id: string }
+  }) as { _id: string }
 
-  const user = await client.data.getItem.query(id)
+  const user = await client.data.getItem.query(_id)
   if (user) {
     users.push(user)
     logger.info('User', user)

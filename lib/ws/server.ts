@@ -9,43 +9,57 @@ import type { ServerOptions, WebSocket } from 'ws'
 const logger = consola.withTag('ws/server')
 
 type BufferLike =
-    | string
-    | Buffer
-    | DataView
-    | number
-    | ArrayBufferView
-    | Uint8Array
-    | ArrayBuffer
-    | SharedArrayBuffer
-    | readonly any[]
-    | readonly number[]
-    | { valueOf(): ArrayBuffer }
-    | { valueOf(): SharedArrayBuffer }
-    | { valueOf(): Uint8Array }
-    | { valueOf(): readonly number[] }
-    | { valueOf(): string }
-    | { [Symbol.toPrimitive](hint: string): string }
+  | string
+  | Buffer
+  | DataView
+  | number
+  | ArrayBufferView
+  | Uint8Array
+  | ArrayBuffer
+  | SharedArrayBuffer
+  | readonly any[]
+  | readonly number[]
+  | { valueOf(): ArrayBuffer }
+  | { valueOf(): SharedArrayBuffer }
+  | { valueOf(): Uint8Array }
+  | { valueOf(): readonly number[] }
+  | { valueOf(): string }
+  | { [Symbol.toPrimitive](hint: string): string }
 
 export class WebSocketProxy<
-T extends typeof WebSocket.WebSocket = typeof WebSocket.WebSocket,
-U extends typeof IncomingMessage = typeof IncomingMessage,
+  T extends typeof WebSocket.WebSocket = typeof WebSocket.WebSocket,
+  U extends typeof IncomingMessage = typeof IncomingMessage,
 > extends WebSocketServer {
   constructor(
-    options: ServerOptions<T, U>,
+    options?: ServerOptions<T, U>,
     callback?: () => void,
   ) {
     super(options, callback)
-    logger.info('Created')
-    const wrappedMethods = {
-      on: this.customOn.bind(this),
-      send: this.customSend.bind(this),
-    }
 
-    return new Proxy(this, {
+    logger.info('Created')
+    // const wrappedMethods = {
+    //   on: this.customOn.bind(this),
+    //   // send: this.customSend.bind(this),
+    // }
+
+    return this.getProxy(this)
+  }
+
+  private getWrappedMethod<S extends WebSocketServer | WebSocket>(target: S, prop: string) {
+    const methods = {
+      on: this.customOn.bind(target),
+      send: this.customSend.bind(target),
+      emit: this.customSend.bind(target),
+    } as Record<string, (...args: any[]) => void>
+
+    return methods[prop]
+  }
+
+  private getProxy<S extends WebSocketServer | WebSocket>(t: S) {
+    return new Proxy(t, {
       get: (target, prop, receiver) => {
-        logger.info('123', prop)
         if (prop === 'on' || prop === 'send') {
-          return wrappedMethods[prop]
+          return this.getWrappedMethod(target, prop)
         }
 
         return Reflect.get(target, prop, receiver)
@@ -57,12 +71,22 @@ U extends typeof IncomingMessage = typeof IncomingMessage,
     event: string,
     listener: (this: WebSocketServer, ...args: any[]) => void,
   ) {
-    console.log('event', event)
-
     this.on(event, async (...args: any[]) => {
+      logger.info('Received', event)
+      if (event === 'connection') {
+        const arg = args as [socket: InstanceType<T>, request: InstanceType<U>]
+        const ws = this.getProxy(arg[0])
+        arg[0] = ws
+
+        listener.call(this, ...arg)
+
+        return
+      }
+
       if (event === 'message') {
         await sleep(100)
-        logger.debug('Receiving', event, JSON.parse(args[0] as string))
+        logger.info('Receiving', event, JSON.parse(args[0] as string))
+        // logger.debug('Receiving', event, JSON.parse(args[0] as string))
         const [data, isBinary] = args as [BufferLike, boolean]
         listener.call(this, data, isBinary)
 
@@ -73,9 +97,17 @@ U extends typeof IncomingMessage = typeof IncomingMessage,
     })
   }
 
-  private async customSend(event: string | symbol, data: BufferLike) {
+  private async customSend(
+    this: WebSocket | WebSocketServer,
+    data: BufferLike,
+    cb?: (error?: Error) => void,
+  ) {
     await sleep(100)
-    logger.debug('Sending', event)
-    this.emit(event, data)
+
+    logger.debug('Sending', data)
+
+    if ('send' in this) {
+      return this.send(data, cb)
+    }
   }
 }

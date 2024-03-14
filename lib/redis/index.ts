@@ -39,9 +39,9 @@ export async function createRedisStore() {
       return items.flat() as T[]
     }
 
-    const insertOne = async (id: string, data: T) => {
-      const pattern = formatPattern(id)
-      const item = { ...data, id }
+    const insertOne = async (_id: string, data: T) => {
+      const pattern = formatPattern(_id)
+      const item = { ...data, _id }
       await connection.json.set(pattern, '$', item)
 
       return item as T

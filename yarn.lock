@@ -1208,6 +1208,7 @@ __metadata:
     eslint: "npm:^8.57.0"
     fast-glob: "npm:^3.3.2"
     h3: "npm:^1.11.1"
+    jose: "npm:^5.2.3"
     json-schema-migrate: "npm:^2.0.0"
     lint-staged: "npm:^15.2.2"
     listhen: "npm:^1.7.2"
@@ -3739,6 +3740,13 @@ __metadata:
   bin:
     jiti: bin/jiti.js
   checksum: 10/005a0239e50381b5c9919f59dbab86128367bd64872f3376dbbde54b6523f41bd134bf22909e2a509e38fd87e1c22125ca255b9b6b53e7df0fedd23f737334cc
+  languageName: node
+  linkType: hard
+
+"jose@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "jose@npm:5.2.3"
+  checksum: 10/33056092ed6c1539eee6c0c75bd3664a39c639e02f21ec5cb32ddd231b9345f239e7bffe3f4741c903c711e237ceafb816ed634bd9cd5e4fb61b5a1f067e2c40
   languageName: node
   linkType: hard
 

@@ -27,19 +27,6 @@ await Promise.all(files.map(async (file) => {
   })
 }))
 
-// inputData.addInput(jsonInput)
-// const filesRendered = await quicktypeMultiFile({
-//   inputData,
-//   lang,
-//   outputFilename: 'index',
-//   rendererOptions: {
-//     'just-types': true,
-//     'prefer-types': true,
-//     'prefer-unions': true,
-//     'declare-unions': true,
-//   },
-// })
-
 const filesRendered = await quicktypeMultipleJSONSchema(lang, data, {
   rendererOptions: {
     'just-types': true,
