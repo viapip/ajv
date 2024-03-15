@@ -1,11 +1,13 @@
-import { sleep } from '@antfu/utils'
-import consola from 'consola'
 import { WebSocket } from 'ws'
+
+import { jwks, keys1 } from '@/jose/keys'
+import { sign, verify } from '@/jose/sign'
 
 import type { Buffer } from 'node:buffer'
 import type { ClientOptions } from 'ws'
 
-const logger = consola.withTag('client/ws')
+// import consola from 'consola'
+// const logger = consola.withTag('client/ws')
 
 type BufferLike =
   | string
@@ -54,10 +56,10 @@ export class WebSocketProxy extends WebSocket {
   ) {
     this.on(event, async (...args: any[]) => {
       if (event === 'message') {
-        await sleep(100)
-        logger.debug('Receiving', event, JSON.parse(args[0] as string))
         const [data, isBinary] = args as [BufferLike, boolean]
-        listener.call(this, data, isBinary)
+
+        const jws = await verify(data.toString(), jwks)
+        listener.call(this, JSON.stringify(jws), isBinary)
 
         return
       }
@@ -66,10 +68,12 @@ export class WebSocketProxy extends WebSocket {
     })
   }
 
-  private async customSend(data: BufferLike, cb?: (error?: Error) => void) {
-    await sleep(100)
-    logger.debug('Sending', data)
+  private async customSend(
+    data: BufferLike,
+    cb?: (error?: Error) => void,
+  ) {
+    const jws = await sign(keys1, JSON.parse(data.toString()))
 
-    this.send(data, cb)
+    this.send(jws, cb)
   }
 }

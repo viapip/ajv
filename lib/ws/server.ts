@@ -1,6 +1,8 @@
-import { sleep } from '@antfu/utils'
 import consola from 'consola'
 import { WebSocketServer } from 'ws'
+
+import { jwks, keys2 } from '@/jose/keys'
+import { sign, verify } from '@/jose/sign'
 
 import type { Buffer } from 'node:buffer'
 import type { IncomingMessage } from 'node:http'
@@ -19,12 +21,12 @@ type BufferLike =
   | SharedArrayBuffer
   | readonly any[]
   | readonly number[]
-  | { valueOf(): ArrayBuffer }
-  | { valueOf(): SharedArrayBuffer }
-  | { valueOf(): Uint8Array }
-  | { valueOf(): readonly number[] }
-  | { valueOf(): string }
-  | { [Symbol.toPrimitive](hint: string): string }
+  | { valueOf: () => ArrayBuffer }
+  | { valueOf: () => SharedArrayBuffer }
+  | { valueOf: () => Uint8Array }
+  | { valueOf: () => readonly number[] }
+  | { valueOf: () => string }
+  | { [Symbol.toPrimitive]: (hint: string) => string }
 
 export class WebSocketProxy<
   T extends typeof WebSocket.WebSocket = typeof WebSocket.WebSocket,
@@ -84,11 +86,10 @@ export class WebSocketProxy<
       }
 
       if (event === 'message') {
-        await sleep(100)
-        logger.info('Receiving', event, JSON.parse(args[0] as string))
-        // logger.debug('Receiving', event, JSON.parse(args[0] as string))
         const [data, isBinary] = args as [BufferLike, boolean]
-        listener.call(this, data, isBinary)
+        const jws = await verify(data.toString(), jwks)
+
+        listener.call(this, JSON.stringify(jws), isBinary)
 
         return
       }
@@ -102,12 +103,10 @@ export class WebSocketProxy<
     data: BufferLike,
     cb?: (error?: Error) => void,
   ) {
-    await sleep(100)
-
-    logger.debug('Sending', data)
-
     if ('send' in this) {
-      return this.send(data, cb)
+      const jws = await sign(keys2, JSON.parse(data.toString()))
+
+      return this.send(jws, cb)
     }
   }
 }

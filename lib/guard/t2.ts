@@ -1,3 +1,4 @@
+import consola from 'consola'
 import * as jose from 'jose'
 
 const alg = 'ES256'
@@ -9,6 +10,8 @@ const options = {
 const keys = await jose.generateKeyPair(alg, { extractable: true })
 const keys2 = await jose.generateKeyPair(alg, { extractable: true })
 // const keys3 = await jose.generateKeyPair(alg, { extractable: true });
+
+consola.info(keys.publicKey)
 
 const jwk1 = await jose.exportJWK(keys.publicKey).then((jwk) => {
   jwk.kid = 'key1'
@@ -29,8 +32,8 @@ const jwk2 = await jose.exportJWK(keys2.publicKey).then((jwk) => {
 
 const jwks = jose.createLocalJWKSet({ keys: [jwk1, jwk2] })
 
-console.log('keys\n', await jose.exportPKCS8(keys.privateKey))
-console.log('keys2\n', await jose.exportPKCS8(keys2.privateKey))
+consola.log('keys\n', await jose.exportPKCS8(keys.privateKey))
+consola.log('keys2\n', await jose.exportPKCS8(keys2.privateKey))
 
 const jwt = await new jose.SignJWT({
   foo: 'bar',
@@ -42,10 +45,10 @@ const jwt = await new jose.SignJWT({
   .setIssuedAt()
   .sign(keys.privateKey)
 
-console.log('jwt', jwt)
+consola.log('jwt', jwt)
 
 const { payload, protectedHeader } = await jose
   .jwtVerify(jwt, jwks, options)
 
-console.log(protectedHeader)
-console.log(payload)
+consola.log(protectedHeader)
+consola.log(payload)

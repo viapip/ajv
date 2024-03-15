@@ -18,15 +18,15 @@ type BufferLike =
   | SharedArrayBuffer
   | readonly any[]
   | readonly number[]
-  | { valueOf(): ArrayBuffer }
-  | { valueOf(): SharedArrayBuffer }
-  | { valueOf(): Uint8Array }
-  | { valueOf(): readonly number[] }
-  | { valueOf(): string }
-  | { [Symbol.toPrimitive](hint: string): string }
+  | { valueOf: () => ArrayBuffer }
+  | { valueOf: () => SharedArrayBuffer }
+  | { valueOf: () => Uint8Array }
+  | { valueOf: () => readonly number[] }
+  | { valueOf: () => string }
+  | { [Symbol.toPrimitive]: (hint: string) => string }
 
 export class WebSocketProxy extends WebSocket {
-  constructor(
+  public constructor(
     address: string | URL,
     protocols?: string | string[],
     options?: ClientOptions,

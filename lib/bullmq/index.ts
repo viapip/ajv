@@ -1,8 +1,8 @@
 import { Queue } from 'bullmq'
 
 export const bullmq = new Queue<
-{ message: string },
-{ status: number }
+  { message: string },
+  { status: number }
 >('appQueue',
   {
     connection: {
