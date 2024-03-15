@@ -32,44 +32,54 @@ export class WebSocketProxy extends WebSocket {
     options?: ClientOptions,
   ) {
     super(address, protocols, options)
-    const wrappedMethods = {
-      on: this.customOn.bind(this),
-      send: this.customSend.bind(this),
-    }
 
-    return new Proxy(this, {
-      get: (target, prop, receiver) => {
-        if (prop === 'on' || prop === 'send') {
-          return wrappedMethods[prop]
-        }
+    wrapSocket(this)
+  }
+}
 
-        return Reflect.get(target, prop, receiver)
-      },
-    })
+function wrapSocket(ws: WebSocket) {
+  const wrappedMethods = {
+    on: customOn.bind(ws),
+    send: customSend.bind(ws),
   }
 
-  private async customOn(
-    event: string,
-    listener: (this: WebSocket, ...args: any[]) => void,
-  ) {
-    this.on(event, async (...args: any[]) => {
-      if (event === 'message') {
-        await sleep(100)
-        logger.debug('Receiving', event, JSON.parse(args[0] as string))
-        const [data, isBinary] = args as [BufferLike, boolean]
-        listener.call(this, data, isBinary)
-
-        return
+  return new Proxy(ws, {
+    get: (target, prop, receiver) => {
+      if (prop === 'on' || prop === 'send') {
+        return wrappedMethods[prop]
       }
 
-      listener.call(this, ...args)
-    })
-  }
+      return Reflect.get(target, prop, receiver)
+    },
+  })
+}
 
-  private async customSend(data: BufferLike, cb?: (error?: Error) => void) {
-    await sleep(100)
-    logger.debug('Sending', data)
+async function customOn(
+  this: WebSocket,
+  event: string,
+  listener: (...args: any[]) => void,
+) {
+  this.on(event, async (...args: any[]) => {
+    if (event === 'message') {
+      await sleep(100)
+      logger.debug('Receiving', event, JSON.parse(args[0] as string))
+      const [data, isBinary] = args as [BufferLike, boolean]
+      listener.call(this, data, isBinary)
 
-    this.send(data, cb)
-  }
+      return
+    }
+
+    listener.call(this, ...args)
+  })
+}
+
+async function customSend(
+  this: WebSocket,
+  data: BufferLike,
+  cb?: (error?: Error) => void,
+) {
+  await sleep(100)
+  logger.debug('Sending', data)
+
+  this.send(data, cb)
 }

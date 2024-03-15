@@ -8,7 +8,7 @@ import {
 import consola from 'consola'
 
 import { transformer } from '@/transformer'
-import { WebSocketProxy } from '@/ws/client'
+import { WebSocketProxy } from '@/ws'
 
 import type { Router } from '~/server/router'
 
