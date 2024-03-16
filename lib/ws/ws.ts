@@ -7,7 +7,7 @@ import { sign, verify } from '@/jose/sign'
 import type { Buffer } from 'node:buffer'
 import type { ClientOptions } from 'ws'
 
-const logger = consola.withTag('ws/client')
+const logger = consola.withTag('ws')
 
 type BufferLike =
   | string

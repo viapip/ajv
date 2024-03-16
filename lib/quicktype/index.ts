@@ -1,4 +1,3 @@
-'fast-glob'
 import {
   FetchingJSONSchemaStore,
   InputData,
@@ -7,37 +6,30 @@ import {
 } from 'quicktype-core'
 
 import type {
+  JSONSchemaSourceData,
   Options,
   TargetLanguage,
 } from 'quicktype-core'
 
-export interface IQucktypeData {
-  typeName: string
-  jsonString: string
-}
-
 export async function quicktypeMultipleJSONSchema(
-  targetLanguage: string | TargetLanguage,
-  data: IQucktypeData[],
+  lang: string | TargetLanguage,
+  data: JSONSchemaSourceData[],
   options: Omit<Partial<Options>, 'inputData'>,
 ) {
-  const inputData = new InputData()
-
   const jsonInput = new JSONSchemaInput(new FetchingJSONSchemaStore())
+  await Promise.all(
+    data.map(({ name, schema }) => jsonInput.addSource({
+      name,
+      schema,
+    })),
+  )
 
-  for (const { typeName, jsonString } of data) {
-    await jsonInput.addSource({
-      name: typeName,
-      schema: jsonString,
-    })
-  }
-
+  const inputData = new InputData()
   inputData.addInput(jsonInput)
 
   return quicktypeMultiFile({
+    lang,
     inputData,
-    lang: targetLanguage,
-    outputFilename: 'index',
     ...options,
   })
 }

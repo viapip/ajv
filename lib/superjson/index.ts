@@ -1,8 +1,6 @@
-import superjson from 'superjson'
+import json from 'superjson'
 
-import type { DataTransformer } from '@trpc/server'
+import type { DataTransformerOptions } from '@trpc/server'
 
-export const transformer: DataTransformer = {
-  serialize: (obj: unknown) => superjson.stringify(obj),
-  deserialize: (obj: string) => superjson.parse(obj),
-}
+export const superjson = json as DataTransformerOptions
+export const transformer = undefined

@@ -3,7 +3,10 @@ import { basename } from 'node:path'
 
 import { TRPCError } from '@trpc/server'
 import Ajv from 'ajv'
-import localize from 'ajv-i18n/localize/ru'
+import ajvErrors from 'ajv-errors'
+import ajvFormats from 'ajv-formats'
+import ajvI18n from 'ajv-i18n'
+import ajvKeywords from 'ajv-keywords'
 import consola from 'consola'
 import glob from 'fast-glob'
 
@@ -26,8 +29,12 @@ export async function createAjv() {
     messages: false,
     verbose: true,
     allowDate: true,
+    parseDate: true,
     addUsedSchema: true,
     validateFormats: true,
+    inlineRefs: true,
+    passContext: true,
+    timestamp: 'date',
   })
 
   const files = await glob('*.json', {
@@ -43,27 +50,26 @@ export async function createAjv() {
     return { ...schema, $id: schemaId }
   }))
 
+  ajvKeywords(ajv)
+  ajvFormats(ajv)
+  ajvErrors(ajv)
+
   ajv.addSchema(schemas)
   ajv.addSchema(userSchema, 'User')
-  // const test = ajv.getSchema('User')
-  // logger.info(test?.schemaEnv)
 
   function validateSchema(schemaId: string, data: unknown) {
     const valid = ajv.validate(schemaId, data)
 
     if (!valid) {
-      localize(ajv.errors)
+      ajvI18n.ru(ajv.errors)
 
       throw new TRPCError({
         cause: ajv.errors,
         code: 'BAD_REQUEST',
-        message: ajv.errorsText(
-          ajv.errors,
-          {
-            separator: '\n',
-            dataVar: 'data',
-          },
-        ),
+        message: ajv.errorsText(ajv.errors, {
+          separator: '\n',
+          dataVar: 'data',
+        }),
       })
     }
   }

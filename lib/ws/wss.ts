@@ -5,7 +5,7 @@ import { wrapSocket } from './ws'
 
 import type { ServerOptions, WebSocket } from 'ws'
 
-const logger = consola.withTag('ws/server')
+const logger = consola.withTag('wss')
 
 export class WebSocketServerProxy extends WebSocketServer {
   public constructor(options?: ServerOptions, callback?: () => void) {

@@ -1,6 +1,6 @@
 import { createAjv } from '@/ajv'
 import { bullmq } from '@/bullmq'
-import { createMongoDBStore } from '@/mongo'
+import { createMongoDBStore } from '@/mongodb'
 import { createRedisStore } from '@/redis'
 
 import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone'

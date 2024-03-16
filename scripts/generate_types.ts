@@ -5,29 +5,27 @@ import consola from 'consola'
 import glob from 'fast-glob'
 import { TypeScriptTargetLanguage } from 'quicktype-core'
 
-import type { IQucktypeData } from '@/quicktype'
 import { quicktypeMultipleJSONSchema } from '@/quicktype'
 
-const logger = consola.withTag('generate')
-const lang = new TypeScriptTargetLanguage()
+import type { JSONSchemaSourceData } from 'quicktype-core'
 
+const logger = consola.withTag('generate:types')
+
+const lang = new TypeScriptTargetLanguage()
+const data: JSONSchemaSourceData[] = []
 const files = await glob('**/*.json', {
   cwd: 'defs',
   absolute: true,
 })
 
-const data: IQucktypeData[] = []
-
 await Promise.all(files.map(async (file) => {
-  const fileContent = await readFile(file, 'utf8')
-  const schemaId = basename(file, '.json')
-  data.push({
-    typeName: schemaId,
-    jsonString: fileContent,
-  })
+  const schema = await readFile(file, 'utf8')
+  const name = basename(file, '.json')
+  data.push({ name, schema })
 }))
 
 const filesRendered = await quicktypeMultipleJSONSchema(lang, data, {
+  outputFilename: 'index',
   rendererOptions: {
     'just-types': true,
     'prefer-types': true,
@@ -36,9 +34,15 @@ const filesRendered = await quicktypeMultipleJSONSchema(lang, data, {
   },
 })
 
-filesRendered.forEach(({ annotations, lines }, fileName) => {
-  writeFile(
-    `types/${fileName}.ts`,
+for (
+  const [
+    outputFilename,
+    { annotations, lines },
+  ] of filesRendered.entries()
+) {
+  logger.info(`Writing ${outputFilename}.ts...`)
+  await writeFile(
+    `types/${outputFilename}.ts`,
     [
       `/* eslint-disable */`,
       ...lines,
@@ -49,6 +53,6 @@ filesRendered.forEach(({ annotations, lines }, fileName) => {
       flag: 'w',
     },
   )
-})
+}
 
-logger.info('rendered', filesRendered)
+logger.success('Done!')

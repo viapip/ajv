@@ -1,6 +1,9 @@
 import { writeFile } from 'node:fs/promises'
 
+import consola from 'consola'
 import * as jose from 'jose'
+
+const logger = consola.withTag('generate:keys')
 
 const alg = 'ES256'
 
@@ -34,3 +37,5 @@ function addKid(kid: string) {
     return jwk
   }
 }
+
+logger.success('Done!')

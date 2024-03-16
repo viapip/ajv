@@ -4,6 +4,7 @@ import type { TestUserInfo } from 'types'
 export const userSchema: JSONSchemaType<{
   status: string
   info?: TestUserInfo
+  date: string
 }> = {
   type: 'object',
   properties: {
@@ -12,6 +13,10 @@ export const userSchema: JSONSchemaType<{
     },
     info: {
       $ref: 'TestUserInfo',
+    },
+    date: {
+      type: 'string',
+      format: 'date-time',
     },
   },
   required: ['status'],

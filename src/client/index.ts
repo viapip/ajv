@@ -15,8 +15,9 @@ import type { Router } from '~/server/router'
 const logger = consola.withTag('client')
 
 const ws = createWSClient({
-  WebSocket: WebSocketProxy as any,
   url: 'ws://localhost:4000',
+  WebSocket: WebSocketProxy as any,
+
   onOpen() {
     logger.info('Connected')
   },
@@ -73,6 +74,7 @@ while (true) {
     schemaId: 'User',
     data: {
       status: 'active',
+      date: new Date(),
       info: {
         name,
         email: `${name}@example.com`,

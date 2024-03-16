@@ -47,7 +47,8 @@
     "server": "yarn tsx --watch src/server",
     "client": "yarn tsx --watch src/client",
     "workers": "yarn tsx --watch src/workers",
-    "quicktype": "yarn tsx scripts/quicktype.ts"
+    "generate:types": "yarn tsx scripts/generate_types.ts",
+    "generate:keys": "yarn tsx scripts/generate_keys.ts"
   },
   "dependencies": {
     "@antfu/utils": "^0.7.7",
@@ -57,7 +58,10 @@
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "ajv": "^8.12.0",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^2.1.1",
     "ajv-i18n": "^4.2.0",
+    "ajv-keywords": "^5.1.0",
     "bullmq": "^5.4.2",
     "c12": "^1.10.0",
     "consola": "^3.2.3",

@@ -1,5 +1,3 @@
-import { EventEmitter } from 'node:events'
-
 import { observable } from '@trpc/server/observable'
 import consola from 'consola'
 import { z } from 'zod'
@@ -11,7 +9,7 @@ import { queueEvents } from '@/bullmq/events'
 import type { Document, OptionalId } from 'mongodb'
 
 const logger = consola.withTag('server')
-const ee = new EventEmitter()
+
 export const dataRouter = rootRouter({
   getAll: publicProcedure
     .query(async ({
@@ -20,7 +18,6 @@ export const dataRouter = rootRouter({
 
   getItem: publicProcedure
     .input(z.string())
-    // .use(loggerMiddleware)
     .query(async ({
       input: id,
       ctx: { redis },
@@ -43,12 +40,16 @@ export const dataRouter = rootRouter({
       )
 
       logger.info(`Job ${job.id} added:`, JSON.stringify(data, null, 2))
-      // const returnvalue = await job.waitUntilFinished(queueEvents)
-      // logger.success(`Job ${job.id} result:`, returnvalue)
-      const { insertedId } = await mongodb.data.insertOne(data as OptionalId<Document>)
-      logger.info('insertedId:', insertedId.toJSON())
+      const returnvalue = await job.waitUntilFinished(queueEvents)
+      logger.success(`Job ${job.id} result:`, returnvalue)
 
-      return redis.data.insertOne(insertedId.toJSON(), data)
+      const { insertedId } = await mongodb
+        .data
+        .insertOne(data as OptionalId<Document>)
+
+      return redis
+        .data
+        .insertOne(insertedId.toJSON(), data)
     }),
 
   randomNumber: publicProcedure
@@ -58,10 +59,6 @@ export const dataRouter = rootRouter({
       ctx: { bullmq },
     }) => observable<{ status: number }>((emit) => {
       logger.info(`subscription: Running subscription with n = ${n}`)
-      const onData = (data: any) => {
-        emit.next(data)
-      }
-      ee.on('onData', onData)
       queueEvents.on('completed', async ({ jobId }) => {
         logger.info(`subscription: Job ${jobId} completed`)
         const job = await bullmq.getJob(jobId)
