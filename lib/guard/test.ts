@@ -1,4 +1,6 @@
-function generateCombinations(test: { [key: string]: string[] }): string[][] {
+import consola from 'consola'
+
+export function generateCombinations(test: { [key: string]: string[] }): string[][] {
   let combinations: string[][] = [[]]
   Object.keys(test).forEach((key) => {
     const newCombinations: string[][] = []
@@ -19,4 +21,4 @@ const test = {
   material: ['wood', 'plastic', 'metal'],
 }
 
-console.log(generateCombinations(test))
+consola.log(generateCombinations(test))

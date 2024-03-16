@@ -1,3 +1,5 @@
+import consola from 'consola'
+
 interface TestType {
   [key: string]: string[]
 }
@@ -33,4 +35,4 @@ const test: TestType = {
 }
 
 const result = generateCombinations(test)
-console.log(result)
+consola.log(result)

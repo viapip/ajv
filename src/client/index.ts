@@ -7,12 +7,10 @@ import {
 } from '@trpc/client'
 import consola from 'consola'
 
-import { transformer } from '@/transformer'
+import { transformer } from '@/superjson'
 import { WebSocketProxy } from '@/ws'
 
 import type { Router } from '~/server/router'
-
-// import { WebSocketProxy } from './proxy'
 
 const logger = consola.withTag('client')
 

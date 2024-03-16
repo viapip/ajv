@@ -1,7 +1,7 @@
 import { initTRPC } from '@trpc/server'
 import consola from 'consola'
 
-import { transformer } from '@/transformer'
+import { transformer } from '@/superjson'
 
 import type { Context } from './context'
 

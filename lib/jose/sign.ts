@@ -1,7 +1,5 @@
 import * as jose from 'jose'
 
-import { keys1Private } from './keys'
-
 import type { KeyPair } from './types'
 
 const alg = 'ES256'
@@ -14,6 +12,9 @@ export async function sign(
   keyPair: KeyPair,
   payload: jose.JWTPayload,
 ) {
+  const { privateKey } = keyPair
+  const keys1Private = await jose.importJWK(privateKey)
+
   return new jose.SignJWT(payload)
     .setIssuer(options.issuer)
     .setAudience(options.audience)

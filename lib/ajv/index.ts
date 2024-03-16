@@ -27,6 +27,7 @@ export async function createAjv() {
     verbose: true,
     allowDate: true,
     addUsedSchema: true,
+    validateFormats: true,
   })
 
   const files = await glob('*.json', {
