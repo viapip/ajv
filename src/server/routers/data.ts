@@ -49,7 +49,7 @@ export const dataRouter = rootRouter({
 
       return redis
         .data
-        .insertOne(insertedId.toJSON(), data)
+        .insertOne(insertedId.toHexString(), data)
     }),
 
   randomNumber: publicProcedure

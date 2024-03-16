@@ -14,7 +14,7 @@ import type { Router } from '~/server/router'
 
 const logger = consola.withTag('client')
 
-const ws = createWSClient({
+const wsClient = createWSClient({
   url: 'ws://localhost:4000',
   WebSocket: WebSocketProxy as any,
 
@@ -27,7 +27,7 @@ const ws = createWSClient({
 })
 
 const client = createTRPCProxyClient<Router>({
-  links: [wsLink({ client: ws })],
+  links: [wsLink({ client: wsClient })],
   transformer,
 })
 

@@ -11,19 +11,19 @@ import type { JSONSchemaSourceData } from 'quicktype-core'
 
 const logger = consola.withTag('generate:types')
 
-const lang = new TypeScriptTargetLanguage()
-const data: JSONSchemaSourceData[] = []
 const files = await glob('**/*.json', {
   cwd: 'defs',
   absolute: true,
 })
 
+const data: JSONSchemaSourceData[] = []
 await Promise.all(files.map(async (file) => {
   const schema = await readFile(file, 'utf8')
   const name = basename(file, '.json')
   data.push({ name, schema })
 }))
 
+const lang = new TypeScriptTargetLanguage()
 const filesRendered = await quicktypeMultipleJSONSchema(lang, data, {
   outputFilename: 'index',
   rendererOptions: {

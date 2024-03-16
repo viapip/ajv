@@ -28,13 +28,13 @@ export async function createAjv() {
     allErrors: true,
     messages: false,
     verbose: true,
-    allowDate: true,
-    parseDate: true,
+    coerceTypes: true,
     addUsedSchema: true,
     validateFormats: true,
     inlineRefs: true,
     passContext: true,
     timestamp: 'date',
+    $data: true,
   })
 
   const files = await glob('*.json', {
@@ -60,6 +60,7 @@ export async function createAjv() {
   function validateSchema(schemaId: string, data: unknown) {
     const valid = ajv.validate(schemaId, data)
 
+    consola.success('Validating schema', schemaId, valid)
     if (!valid) {
       ajvI18n.ru(ajv.errors)
 
