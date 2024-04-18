@@ -6,8 +6,6 @@ import { publicProcedure, rootRouter } from '../trpc'
 
 import { queueEvents } from '@/bullmq/events'
 
-import type { Document, OptionalId } from 'mongodb'
-
 const logger = consola.withTag('server')
 
 export const dataRouter = rootRouter({
@@ -30,26 +28,32 @@ export const dataRouter = rootRouter({
       data: z.unknown(),
     }))
     .mutation(async ({
-      input: { schemaId, data },
-      ctx: { redis, ajv, bullmq, mongodb },
+      input: { id, schemaId, data },
+      ctx: { redis, ajv, bullmq },
     }) => {
-      ajv.validateSchema(schemaId, data)
+      ajv.validate(schemaId, data)
       const job = await bullmq.add(
         'appQueue',
         { message: JSON.stringify(data) },
       )
 
+      const schema = ajv.get(schemaId)
+      logger.info(`Job ${job.id} added:`, JSON.stringify(schema, null, 2))
+
       logger.info(`Job ${job.id} added:`, JSON.stringify(data, null, 2))
       const returnvalue = await job.waitUntilFinished(queueEvents)
       logger.success(`Job ${job.id} result:`, returnvalue)
 
-      const { insertedId } = await mongodb
-        .data
-        .insertOne(data as OptionalId<Document>)
+      // const { insertedId } = await mongodb
+      //   .data
+      //   .insertOne(data as OptionalId<Document>)
 
       return redis
         .data
-        .insertOne(insertedId.toHexString(), data)
+        .insertOne(
+          id,
+          data,
+        )
     }),
 
   randomNumber: publicProcedure

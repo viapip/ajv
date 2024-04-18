@@ -27,7 +27,7 @@ const lang = new TypeScriptTargetLanguage()
 const filesRendered = await quicktypeMultipleJSONSchema(lang, data, {
   outputFilename: 'index',
   rendererOptions: {
-    'just-types': true,
+    'just-types': false,
     'prefer-types': true,
     'prefer-unions': true,
     'declare-unions': true,

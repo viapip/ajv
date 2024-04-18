@@ -22,6 +22,7 @@ const schema = [
 
       // Stylistic
       'curly': ['error', 'all'],
+      'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
       'newline-before-return': ['error'],
       'newline-per-chained-call': ['error', { ignoreChainWithDepth: 2 }],
       'multiline-ternary': ['error', 'always'],

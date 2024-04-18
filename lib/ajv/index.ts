@@ -16,6 +16,15 @@ import type { AnySchemaObject } from 'ajv'
 
 const logger = consola.withTag('ajv')
 
+/**
+ * Creates an instance of Ajv, a JSON schema validator, and returns an object
+ * containing helper functions for adding and validating schemas.
+ *
+ * @return {object} An object with the following properties:
+ *   - addSchema: A function that adds a schema to the Ajv instance.
+ *   - getSchema: A function that retrieves a schema from the Ajv instance.
+ *   - validateSchema: A function that validates data against a schema.
+ */
 export async function createAjv() {
   const ajv = new Ajv({
     logger,
@@ -28,13 +37,6 @@ export async function createAjv() {
     allErrors: true,
     messages: false,
     verbose: true,
-    coerceTypes: true,
-    addUsedSchema: true,
-    validateFormats: true,
-    inlineRefs: true,
-    passContext: true,
-    timestamp: 'date',
-    $data: true,
   })
 
   const files = await glob('*.json', {
@@ -57,27 +59,30 @@ export async function createAjv() {
   ajv.addSchema(schemas)
   ajv.addSchema(userSchema, 'User')
 
-  function validateSchema(schemaId: string, data: unknown) {
-    const valid = ajv.validate(schemaId, data)
-
-    consola.success('Validating schema', schemaId, valid)
-    if (!valid) {
-      ajvI18n.ru(ajv.errors)
-
-      throw new TRPCError({
-        cause: ajv.errors,
-        code: 'BAD_REQUEST',
-        message: ajv.errorsText(ajv.errors, {
-          separator: '\n',
-          dataVar: 'data',
-        }),
-      })
-    }
-  }
-
   return {
-    addSchema: ajv.addSchema,
-    getSchema: ajv.getSchema,
-    validateSchema,
+    add(schemaId: string, schema: AnySchemaObject) {
+      ajv.addSchema(schema, schemaId)
+    },
+    get<T = unknown>(schemaId: string) {
+      return ajv.getSchema<T>(schemaId)
+    },
+    validate(schemaId: string, data: unknown) {
+      const valid = ajv.validate(schemaId, data)
+
+      if (!valid) {
+        ajvI18n.ru(ajv.errors)
+
+        throw new TRPCError({
+          cause: ajv.errors,
+          code: 'BAD_REQUEST',
+          message: ajv.errorsText(ajv.errors, {
+            separator: '\n',
+            dataVar: 'data',
+          }),
+        })
+      }
+
+      return valid
+    },
   }
 }
