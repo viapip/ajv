@@ -1,5 +1,4 @@
 declare module '@hyperswarm/secret-stream' {
-
   import { Duplex } from 'streamx'
 
   import type { Buffer } from 'node:buffer'
@@ -65,7 +64,7 @@ declare module '@hyperswarm/secret-stream' {
   }
 
   export default class NoiseSecretStream extends Duplex {
-    constructor(isInitiator: boolean, rawStream: Duplex, opts?: StreamOptions)
+    constructor(isInitiator: boolean, rawStream?: Duplex, opts?: StreamOptions)
 
     static keyPair(seed?: Buffer): KeyPair
     static id(handshakeHash: Buffer, isInitiator: boolean, id?: Buffer): Buffer
