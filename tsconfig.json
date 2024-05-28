@@ -39,6 +39,7 @@
   "include": [
     "types/**/*",
     "src/**/*",
+    "tmp/**/*",
     "lib/**/*",
     "scripts/**/*"
   ]

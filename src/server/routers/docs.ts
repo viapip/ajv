@@ -6,15 +6,17 @@ import { publicProcedure, rootRouter } from '../trpc'
 
 import * as a from '@/automerge'
 
+import type { LoroEvent } from 'loro-crdt'
+
 const logger = consola.withTag('server')
 
 export const docsRouter = rootRouter({
   getKeys: publicProcedure
-    .query(async () => a.docs.keys()),
+    .query(async () => a.getKeys()),
 
   getItem: publicProcedure
-    .input(z.string())
-    .query(async ({ input: id }) => a.getItem(id)),
+    .input(z.undefined())
+    .query(async () => a.getItem()),
 
   putItem: publicProcedure
     .input(z.object({
@@ -25,24 +27,21 @@ export const docsRouter = rootRouter({
       }),
     }))
     .mutation(async ({ input: { id, doc } }) => {
-      a.change(id, (d) => {
-        d.name = doc.name
-        d.ideas = doc.ideas
-      })
+      a.putItem(id, doc)
 
-      return a.getItem(id)
+      return a.getItem()
     }),
 
   deleteItem: publicProcedure
     .input(z.string())
     .mutation(async ({ input: id }) => {
-      a.docs.delete(id)
+      a.deleteItem(id)
 
       return true
     }),
 
   onChange: publicProcedure
-    .subscription(async () => observable<{ id: string; lastChange: string }>((emit) => {
+    .subscription(async () => observable<LoroEvent>((emit) => {
       a.onChange((change) => {
         logger.success('onChange', change)
         emit.next(change)

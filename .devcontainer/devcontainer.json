@@ -72,6 +72,6 @@
         "zardoy.ts-essential-plugins",
         "mongodb.mongodb-vscode"
       ]
-    }
+    },
   }
 }

@@ -1,64 +1,40 @@
-import { EventEmitter } from 'node:events'
-
-import { next as A } from '@automerge/automerge'
+import { Loro } from 'loro-crdt'
 
 import { uint8ArrayToString } from '@/transformer'
+
+import type { LoroEvent, LoroMap } from 'loro-crdt'
 
 export interface DocType {
   name: string
   ideas: Array<string>
 }
 
-export const docs: Map<string, A.Doc<DocType>> = new Map()
-const emitter = new EventEmitter()
+const root = new Loro<{ docs: LoroMap<Record<string, DocType>> }>()
 
-let n = 0
-export function next() {
-  n += 1
+const docs = root.getMap('docs')
+docs.set('test', { name: '', ideas: [] })
 
-  return n
+export function getKeys() {
+  return docs.keys() as string[]
 }
 
-export function getItem(id: string) {
-  if (!docs.has(id)) {
-    docs.set(id, A.init())
-  }
-
-  const doc = docs.get(id)!
-
-  return uint8ArrayToString(A.save(doc))
+export function getItem() {
+  return uint8ArrayToString(root.exportSnapshot())
 }
 
-export function change(
+export function deleteItem(id: string) {
+  docs.delete(id)
+}
+
+export function putItem(
   id: string,
-  changeFn: (d: DocType) => void,
-): A.Doc<DocType> {
-  if (!docs.has(id)) {
-    docs.set(id, A.init<DocType>())
-  }
-
-  let doc = docs.get(id)!
-
-  doc = A.change(doc, {
-    message: `Change ${next()}`,
-    time: new Date().getTime(),
-  }, changeFn)
-
+  doc: DocType,
+) {
   docs.set(id, doc)
-
-  const lastChange = A.getLastLocalChange(doc)
-  emitter.emit('change', {
-    i: id,
-    lastChange: lastChange
-      ? uint8ArrayToString(lastChange)
-      : '',
-  })
-
-  return doc
 }
 
 export function onChange(
-  listener: (data: { id: string; lastChange: string }) => void,
+  listener: (event: LoroEvent) => void,
 ) {
-  emitter.on('change', listener)
+  root.subscribe(listener)
 }

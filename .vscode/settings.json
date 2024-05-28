@@ -10,18 +10,15 @@
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
-
   "npm.packageManager": "yarn",
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   // "typescript.inlayHints.parameterNames.enabled": "all",
-
   "where-am-i.icon": "home",
   "where-am-i.template": "{icon} {project-name}",
   "where-am-i.colorful": true,
   "where-am-i.color": "#fff",
-
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
   "eslint.experimental.useFlatConfig": true,
@@ -36,26 +33,22 @@
     "json",
     "jsonc"
   ],
-
   "browse-lite.startUrl": "http://localhost:3000",
   "browse-lite.chromeExecutable": "/usr/bin/chromium",
-
   "fileNestingUpdater.autoUpdate": true,
   "fileNestingUpdater.autoUpdateInterval": 720,
   "fileNestingUpdater.promptOnAutoUpdate": true,
   "fileNestingUpdater.upstreamRepo": "antfu/vscode-file-nesting-config",
   "fileNestingUpdater.upstreamBranch": "main",
-
   "search.exclude": {
     "**/.yarn": true,
     "**/.pnp.*": true
   },
-
   "[vue]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[markdown]": {
     "editor.formatOnSave": false

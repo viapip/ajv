@@ -13,7 +13,6 @@ const schema = [
       'eslint-comments/no-unlimited-disable': 'off',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-unused-vars': ['warn', { args: 'none' }],
-      'no-use-before-define': ['error', { functions: false }],
       'no-param-reassign': ['error', { props: false }],
       'no-underscore-dangle': ['error', { allow: ['_id', '_count'] }],
       'no-shadow': ['error', { allow: ['_id', '_count'] }],

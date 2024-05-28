@@ -1,19 +1,21 @@
 import process from 'node:process'
 
-import { next as A } from '@automerge/automerge'
 import {
   createTRPCProxyClient,
   createWSClient,
   wsLink,
 } from '@trpc/client'
 import consola from 'consola'
+import { Loro } from 'loro-crdt'
 import { sleep } from 'radash'
 
+import type { DocType } from '@/automerge'
 import { transformer } from '@/superjson'
-import { stringToUint8Array } from '@/transformer'
 import { WebSocketProxy } from '@/ws'
 
 import type { Router } from '~/server/router'
+
+import type { LoroMap } from 'loro-crdt'
 
 const logger = consola.withTag('client')
 
@@ -35,19 +37,16 @@ const client = createTRPCProxyClient<Router>({
 })
 
 const id = `${Number.parseInt(process.argv[2], 10) || 1}`
-let doc = A.load<{ ideas: string[]; name: string }>(stringToUint8Array(await client.docs.getItem.query(id)))
+const root = new Loro<{ docs: LoroMap<Record<string, DocType>> }>()
 
-logger.log(doc)
+logger.log(root)
 
 const subscription = client.docs.onChange.subscribe(undefined, {
   onStarted() {
     logger.info('Subscription started')
   },
   onData(data) {
-    logger.success('Subscription data', data)
-    const res = A.applyChanges(doc, [stringToUint8Array(data.lastChange)])
-    doc = res[0]
-    logger.log(test)
+    logger.success('Subscription data', JSON.stringify(data))
   },
   onError(err) {
     logger.error('Subscription error', err)
@@ -58,12 +57,14 @@ const subscription = client.docs.onChange.subscribe(undefined, {
 })
 
 while (true) {
-  await sleep(1000)
+  await sleep(100)
   const res = await client.docs.putItem.mutate({
     id,
     doc: {
       name: `test-${Math.floor(Math.random() * 1000)}`,
-      ideas: Array.from({ length: 10 }).map(() => `${Math.floor(Math.random() * 1000)}`),
+      ideas: Array
+        .from({ length: 1000 })
+        .map(() => `${Math.floor(Math.random() * 1000)}`),
     },
   })
 
