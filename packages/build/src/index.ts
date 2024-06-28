@@ -2,6 +2,7 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as process from 'node:process'
 
+import alias from '@rollup/plugin-alias'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
@@ -10,6 +11,7 @@ import { defineConfig } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 
+import type { RollupAliasOptions } from '@rollup/plugin-alias'
 import type { RollupCommonJSOptions } from '@rollup/plugin-commonjs'
 import type { RollupJsonOptions } from '@rollup/plugin-json'
 import type { RollupNodeResolveOptions } from '@rollup/plugin-node-resolve'
@@ -37,6 +39,7 @@ export interface Options {
   input?: string
 
   json?: RollupJsonOptions
+  alias?: RollupAliasOptions
   resolve?: RollupNodeResolveOptions
   commonjs?: RollupCommonJSOptions
   esbuild?: RollupEsbuildOptions
@@ -81,6 +84,9 @@ function build(options?: Options) {
       preferConst: true,
       indent: '  ',
     },
+    alias: {
+      entries: [],
+    },
     resolve: {
       preferBuiltins: true,
     },
@@ -123,6 +129,7 @@ function build(options?: Options) {
       ],
       plugins: [
         json(opts.json),
+        alias(opts.alias),
         resolve(opts.resolve),
         commonjs(opts.commonjs),
         esbuild(opts.esbuild),
@@ -141,6 +148,7 @@ function build(options?: Options) {
       ],
       plugins: [
         json(opts.json),
+        alias(opts.alias),
         resolve(opts.resolve),
         dts(opts.dts),
       ],
