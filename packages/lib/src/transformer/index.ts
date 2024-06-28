@@ -18,27 +18,11 @@ export function stringToUint8Array(str: string) {
 
 export const transformer: DataTransformerOptions = {
   input: {
-    serialize: (obj: unknown) => {
-      logger.debug('input.serialize', obj)
-
-      return uint8ArrayToString(encode(obj))
-    },
-    deserialize: (obj: string) => {
-      logger.debug('input.deserialize', obj)
-
-      return decode(stringToUint8Array(obj))
-    },
+    serialize: (obj: unknown) => uint8ArrayToString(encode(obj)),
+    deserialize: (obj: string) => decode(stringToUint8Array(obj)),
   },
   output: {
-    serialize: (obj: unknown) => {
-      logger.debug('output.serialize', obj)
-
-      return uint8ArrayToString(encode(obj))
-    },
-    deserialize: (obj: string) => {
-      logger.debug('output.deserialize', obj)
-
-      return decode(stringToUint8Array(obj))
-    },
+    serialize: (obj: unknown) => uint8ArrayToString(encode(obj)),
+    deserialize: (obj: string) => decode(stringToUint8Array(obj)),
   },
 }

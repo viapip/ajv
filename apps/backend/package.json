@@ -1,18 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "@sozdev/typescript-template",
+  "name": "@regioni/backend",
   "type": "module",
   "version": "0.0.9",
   "packageManager": "yarn@4.1.1",
   "description": "Rollup build script",
   "author": "Alexander Semyenov <semyenov@hotmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/semyenov/typescript-template#readme",
+  "homepage": "https://gitea.local/regioni/backend#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/semyenov/typescript-template.git"
+    "url": "git+https://gitea.local/regioni/backend.git"
   },
-  "bugs": "https://github.com/semyenov/rollup-build/issues",
+  "bugs": "https://gitea.local/semyenov/rollup-build/issues",
   "keywords": [],
   "sideEffects": false,
   "exports": {
@@ -50,28 +50,37 @@
     "generate:types": "yarn tsx scripts/generate_types.ts",
     "generate:keys": "yarn tsx scripts/generate_keys.ts"
   },
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
-  "devDependencies": {
-    "@sozdev/eslint-config": "^0.0.11",
-    "@sozdev/rollup-build": "^0.0.10",
-    "@types/ws": "^8.5.10",
-    "eslint": "^8.57.0",
-    "json-schema-migrate": "^2.0.0",
-    "lint-staged": "^15.2.2",
-    "quicktype-core": "^23.0.115",
-    "rollup": "^4.14.0",
-    "simple-git-hooks": "^2.11.1",
-    "tsx": "^4.7.2",
-    "typescript": "^5.4.4",
-    "typescript-json-schema": "0.63.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "yarn lint-staged"
-  },
-  "lint-staged": {
-    "./{src,lib,scripts}/**/*.{ts,js,yaml,yml,json,md,mdc,vue}": "yarn lint --fix --"
+  "dependencies": {
+    "@antfu/utils": "^0.7.7",
+    "@msgpack/msgpack": "^3.0.0-beta2",
+    "@regioni/build": "workspace:^",
+    "@regioni/lib": "workspace:^",
+    "@trpc/client": "^10.45.2",
+    "@trpc/server": "^10.45.2",
+    "ajv": "^8.12.0",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^3.0.1",
+    "ajv-i18n": "^4.2.0",
+    "ajv-keywords": "^5.1.0",
+    "bullmq": "^5.5.1",
+    "c12": "^1.10.0",
+    "chalk": "^5.3.0",
+    "consola": "^3.2.3",
+    "cross-env": "7.0.3",
+    "defu": "^6.1.4",
+    "dotenv": "^16.4.5",
+    "fast-glob": "^3.3.2",
+    "h3": "^1.11.1",
+    "jose": "^5.2.3",
+    "listhen": "^1.7.2",
+    "mongodb": "^6.5.0",
+    "nanoid": "^5.0.7",
+    "radix-ts": "^1.0.2",
+    "redis": "^4.6.13",
+    "superjson": "^2.2.1",
+    "ts-pattern": "^5.1.0",
+    "unstorage": "^1.10.2",
+    "ws": "^8.16.0",
+    "zod": "^3.22.4"
   }
 }

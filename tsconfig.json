@@ -13,7 +13,7 @@
     "noResolve": false,
     "paths": {
       "~/*": [
-        "src/*"
+        "packages/src/*"
       ],
       "@/*": [
         "lib/*"
@@ -38,7 +38,7 @@
   },
   "include": [
     "types/**/*",
-    "src/**/*",
+    "packages/src/**/*",
     "tmp/**/*",
     "lib/**/*",
     "scripts/**/*"

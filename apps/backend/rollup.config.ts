@@ -1,4 +1,4 @@
-import build from '@sozdev/rollup-build'
+import build from '@regioni/build'
 
 export default build({
   src: './src',

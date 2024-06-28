@@ -1,8 +1,7 @@
+import { type } from '@regioni/lib/ajv'
 import { createHTTPServer } from '@trpc/server/adapters/standalone'
 import { applyWSSHandler } from '@trpc/server/adapters/ws'
 import consola from 'consola'
-
-import { WebSocketServerProxy } from '@/ws'
 
 import { createContext } from './context'
 import { router } from './router'
