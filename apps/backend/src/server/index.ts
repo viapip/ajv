@@ -1,4 +1,4 @@
-import { type } from '@regioni/lib/ajv'
+import { } from '@regioni/lib'
 import { createHTTPServer } from '@trpc/server/adapters/standalone'
 import { applyWSSHandler } from '@trpc/server/adapters/ws'
 import consola from 'consola'
