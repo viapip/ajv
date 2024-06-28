@@ -1,0 +1,151 @@
+{
+  "editor.tabCompletion": "off",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.formatOnSave": true,
+
+  "editor.wrappingStrategy": "advanced",
+  "editor.wordWrap": "off",
+  "editor.wordWrapColumn": 80,
+  "editor.wrappingIndent": "deepIndent",
+  "editor.accessibilitySupport": "off",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.find.addExtraSpaceOnTop": false,
+  "editor.guides.bracketPairs": "active",
+  "editor.inlineSuggest.enabled": true,
+  "editor.lineNumbers": "interval",
+  "editor.multiCursorModifier": "alt",
+  "editor.renderWhitespace": "boundary",
+  "editor.suggestSelection": "first",
+  "editor.tabSize": 2,
+  "editor.unicodeHighlight.invisibleCharacters": false,
+  "editor.stickyScroll.enabled": true,
+  "editor.hover.sticky": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never",
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+
+  "terminal.integrated.defaultProfile.linux": "zsh",
+
+  "npm.packageManager": "yarn",
+
+  "where-am-i.icon": "home",
+  "where-am-i.template": "{icon} {project-name}",
+  "where-am-i.colorful": true,
+  "where-am-i.color": "#fff",
+  // "where-am-i": false,
+
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "volar.takeOverMode.extension": "Vue.volar",
+
+  "eslint.format.enable": true,
+  "eslint.lintTask.enable": true,
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.lintTask.options": "--config ./eslint.config.js",
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "eslint.quiet": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml"
+  ],
+
+  "stylelint.packageManager": "yarn",
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "vue" // necessary for stylelint diagnostics in .vue <style> tag
+  ],
+
+  "i18n-ally.localesPaths": ["src/i18n/locales"],
+  "i18n-ally.displayLanguage": "ru",
+  "i18n-ally.sourceLanguage": "ru",
+  "i18n-ally.keystyle": "nested",
+
+  "explorer.fileNesting.patterns": {
+    "nuxt.config.*": "*.env, .babelrc*, .codecov, .cssnanorc*, .env.*, .envrc, .htmlnanorc*, .lighthouserc.*, .mocha*, .postcssrc*, .terserrc*, api-extractor.json, ava.config.*, babel.config.*, contentlayer.config.*, cssnano.config.*, cypress.*, env.d.ts, formkit.config.*, formulate.config.*, histoire.config.*, htmlnanorc.*, jasmine.*, jest.config.*, jsconfig.*, karma*, lighthouserc.*, playwright.config.*, postcss.config.*, puppeteer.config.*, rspack.config.*, svgo.config.*, tailwind.config.*, tsconfig.*, tsdoc.*, uno.config.*, unocss.config.*, vitest.config.*, webpack.config.*, windi.config.*, i18n.config.*, .nuxt*, app.config.*"
+  },
+  "fileNestingUpdater.autoUpdate": true,
+  "fileNestingUpdater.autoUpdateInterval": 720,
+  "fileNestingUpdater.promptOnAutoUpdate": true,
+  "fileNestingUpdater.upstreamRepo": "antfu/vscode-file-nesting-config",
+  "fileNestingUpdater.upstreamBranch": "main",
+
+  "tsEssentialPlugins.cleanupVueComponentCompletions": "filter-all",
+  "tsEssentialPlugins.displayAdditionalInfoInCompletions": true,
+  "tsEssentialPlugins.enableFileDefinitions": true,
+  "tsEssentialPlugins.experiments.changeKindToFunction": true,
+  "tsEssentialPlugins.suggestions.localityBonus": true,
+  "tsEssentialPlugins.fixSuggestionsSorting": true,
+  "tsEssentialPlugins.jsxEmmet.modernize": true,
+  "tsEssentialPlugins.libDomPatching": true,
+  "tsEssentialPlugins.outline.arraysTuplesNumberedItems": true,
+  "tsEssentialPlugins.enableVueSupport": true,
+  "tsEssentialPlugins.experiments.enableInsertNameOfSuggestionFix": true,
+  "tsEssentialPlugins.removeVueComponentsOptionDefinition": true,
+  "volar.vueserver.configFilePath": "/home/node/.vscode-server/extensions/zardoy.ts-essential-plugins-0.0.69/volarConfig.js",
+
+  "tailwind-fold.unfoldIfLineSelected": true,
+
+  "conventionalCommits.scopes": [
+    "backend store",
+    "service-worker",
+    "winbox",
+    "authorization",
+    "mapLibre",
+    "orama",
+    "workers",
+    "linters"
+  ],
+
+  "files.associations": {
+    "*.css": "postcss"
+  },
+
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+
+  "[yaml]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+
+  "[ignore]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+
+  "[postcss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
+  },
+
+  "[dockerfile]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+
+  "[dotenv]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
+}

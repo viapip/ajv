@@ -1,0 +1,63 @@
+/* nunito-sans-12pt-extralight */
+@font-face {
+  font-weight: 200;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt ExtraLight"), local("NunitoSans12pt-ExtraLight"), url("nunito-sans-12pt-extralight.woff2") format("woff2");
+}
+
+/* nunito-sans-12pt-light */
+@font-face {
+  font-weight: 300;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt Light"), local("NunitoSans12pt-Light"), url("nunito-sans-12pt-light.woff2") format("woff2");
+}
+
+/* nunito-sans-12pt-regular */
+@font-face {
+  font-weight: 400;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt Regular"), local("NunitoSans12pt-Regular"), url("nunito-sans-12pt-regular.woff2") format("woff2");
+}
+
+/* nunito-sans-12pt-medium */
+@font-face {
+  font-weight: 500;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt Medium"), local("NunitoSans12pt-Medium"), url("nunito-sans-12pt-medium.woff2") format("woff2");
+}
+
+/* nunito-sans-12pt-semibold */
+@font-face {
+  font-weight: 600;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt SemiBold"), local("NunitoSans12pt-SemiBold"), url("nunito-sans-12pt-semibold.woff2") format("woff2");
+}
+
+/* nunito-sans-12pt-bold */
+@font-face {
+  font-weight: 700;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt Bold"), local("NunitoSans12pt-Bold"), url("nunito-sans-12pt-bold.woff2") format("woff2");
+}
+
+/* nunito-sans-12pt-extrabold */
+@font-face {
+  font-weight: 800;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt ExtraBold"), local("NunitoSans12pt-ExtraBold"), url("nunito-sans-12pt-extrabold.woff2") format("woff2");
+}
+
+/* nunito-sans-12pt-black */
+@font-face {
+  font-weight: 900;
+  font-family: 'Nunito Sans';
+  font-style: normal;
+  src: local("Nunito Sans 12pt Black"), local("NunitoSans12pt-Black"), url("nunito-sans-12pt-black.woff2") format("woff2");
+}

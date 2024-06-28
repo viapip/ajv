@@ -1,0 +1,74 @@
+'404':
+  button:
+    back: Назад
+  text:
+    not-found: Страница не найдена
+
+index:
+  title: Добро пожаловать
+
+dispositions:
+  title: Позиции
+  search:
+    placeholder: поиск по позициям
+  item:
+    search:
+      placeholder: поиск по данным позиции
+      status: 0 полей | {n} поле | {n} поля | {n} полей
+    fields:
+      _id: идентификатор
+      info: информация
+      feature: позиция
+      type: тип
+      level: уровень
+      fields: поля
+      parent: родитель
+      demands: потребности
+      resources: ресурсы
+      meta: мета
+
+objects:
+  title: Объекты
+  search:
+    placeholder: поиск по объектам
+  item:
+    search:
+      placeholder: поиск по данным объекта
+      status: 0 полей | {n} поле | {n} поля | {n} полей
+    fields:
+      _id: идентификатор
+      info: информация
+      feature: позиция
+      type: тип
+      level: уровень
+      fields: поля
+      parent: родитель
+      demands: потребности
+      resources: ресурсы
+      meta: мета
+
+users:
+  title: Пользователи
+  search:
+    placeholder: поиск по пользователям
+  item:
+    search:
+      placeholder: поиск по данным пользователя
+      status: 0 полей | {n} полe | {n} поля | {n} полей
+    fields:
+      _id: идентификатор
+      info: информация
+      type: тип
+      mandate: мандат
+      role: роль
+      email: эл. почта
+      scopes: доступы
+      modules: модули
+      meta: мета
+
+login:
+  title: Вход
+  submit: Войти
+
+test:
+  title: Тест

@@ -1,0 +1,48 @@
+'404':
+  button:
+    back: Back
+  text:
+    not-found: Page not found
+
+index:
+  title: Welcome
+
+objects:
+  title: Objects
+  search:
+    placeholder: search objects
+  item:
+    search:
+      placeholder: search object data
+    fields:
+      _id: identifier
+      demands: needs
+      feature: position
+      fields: fields
+      info: information
+      level: level
+      parent: parent
+      resources: resources
+      type: type
+
+users:
+  title: Users
+  search:
+    placeholder: search users
+  item:
+    search:
+      placeholder: search user data
+    fields:
+      _id: identifier
+      email: email
+      info: information
+      mandate: mandate
+      role: role
+      scopes: accesses
+      type: type
+
+help:
+  title: Help
+
+test:
+  title: Test

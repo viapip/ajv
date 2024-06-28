@@ -1,0 +1,15 @@
+{
+  "tiles": [
+    "http://192.168.10.44:8888/tileserver/data/natural_earth/{z}/{x}/{y}.webp"
+  ],
+  "name": "Natural Earth II with Shaded Relief",
+  "format": "webp",
+  "basename": "natural_earth.mbtiles",
+  "id": "natural_earth",
+  "center": [6.2347, 45.4062, 6],
+  "description": "Natural Earth II raster tiles from https://github.com/lukasmartinelli/natural-earth-vector-tiles",
+  "maxzoom": 6,
+  "minzoom": 0,
+  "bounds": [-180, -85.0511, 180, 85.0511],
+  "tilejson": "2.0.0"
+}
