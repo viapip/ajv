@@ -15,13 +15,8 @@
   "bugs": "https://gitea.local/regioni/lib/issues",
   "keywords": [],
   "sideEffects": false,
-  "exports": {
-    "ajv": {
-      "default": "./ajv/index.ts"
-    }
-  },
   "files": [
-    "src"
+    "*"
   ],
   "scripts": {
     "dev": "yarn esno src/index.ts",

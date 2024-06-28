@@ -1,8 +1,8 @@
-import { createAjv } from '@/ajv'
-import { bullmq } from '@/bullmq'
-import { createRedisStore } from '@/redis'
+import { createAjv } from '@regioni/lib/ajv'
+import { bullmq } from '@regioni/lib/bullmq'
+import { createRedisStore } from '@regioni/lib/redis'
 
-// import { createMongoDBStore } from '@/mongodb'
+// import { createMongoDBStore } from '@regioni/lib/mongodb'
 
 import type { CreateHTTPContextOptions } from '@trpc/server/adapters/standalone'
 import type { CreateWSSContextFnOptions } from '@trpc/server/adapters/ws'

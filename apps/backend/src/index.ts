@@ -1,4 +1,4 @@
-import { } from '@regioni/lib'
+import { WebSocketServerProxy } from '@regioni/lib/ws'
 import { createHTTPServer } from '@trpc/server/adapters/standalone'
 import { applyWSSHandler } from '@trpc/server/adapters/ws'
 import consola from 'consola'

@@ -1,10 +1,9 @@
+import * as a from '@regioni/lib/automerge'
 import { observable } from '@trpc/server/observable'
 import consola from 'consola'
 import { z } from 'zod'
 
 import { publicProcedure, rootRouter } from '../trpc'
-
-import * as a from '@/automerge'
 
 import type { LoroEvent } from 'loro-crdt'
 

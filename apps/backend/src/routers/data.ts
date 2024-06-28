@@ -1,10 +1,9 @@
+import { queueEvents } from '@regioni/lib/bullmq/events'
 import { observable } from '@trpc/server/observable'
 import consola from 'consola'
 import { z } from 'zod'
 
 import { publicProcedure, rootRouter } from '../trpc'
-
-import { queueEvents } from '@/bullmq/events'
 
 const logger = consola.withTag('server')
 
