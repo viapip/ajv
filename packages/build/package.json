@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "name": "@regioni/build",
+  "type": "module",
+  "version": "0.0.9",
+  "packageManager": "yarn@4.0.1",
+  "description": "Rollup build script",
+  "author": "Alexander Semyenov <semyenov@hotmail.com>",
+  "license": "MIT",
+  "homepage": "https://gitea.local/regioni/build#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitea.local/regioni/build.git"
+  },
+  "bugs": "https://gitea.local/regioni/build/issues",
+  "keywords": [],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "yarn esno src/index.ts",
+    "typecheck": "yarn tsc --noEmit",
+    "build": "cross-env NODE_OPTIONS=\"--no-warnings\" yarn rollup --configPlugin esbuild --config rollup.config.ts",
+    "start": "cross-env NODE_OPTIONS=\"--no-warnings --experimental-modules --experimental-import-meta-resolve\" yarn node dist/esm/index.mjs",
+    "schema": "yarn typescript-json-schema --out schema.json --skipLibCheck src/index.ts Options",
+    "release": "yarn npm publish",
+    "lint": "yarn eslint --config eslint.config.js",
+    "clean": "yarn exec rm -rf dist"
+  },
+  "dependencies": {
+    "@rollup/plugin-alias": "^5.0.1",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "consola": "^3.2.3",
+    "cross-env": "7.0.3",
+    "defu": "^6.1.3",
+    "dotenv": "^16.3.1",
+    "esbuild": "^0.19.5",
+    "rollup": "^4.4.0",
+    "rollup-plugin-dts": "^6.1.0",
+    "rollup-plugin-esbuild": "^6.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4"
+  },
+  "devDependencies": {
+    "@sozdev/eslint-config": "^0.0.11",
+    "esno": "^4.0.0",
+    "lint-staged": "^15.1.0",
+    "simple-git-hooks": "^2.9.0",
+    "typescript": "^5.2.2",
+    "typescript-json-schema": "0.62.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "yarn lint-staged"
+  },
+  "lint-staged": {
+    "./src/**/*.{ts,js,yaml,yml,json,md,mdc,vue}": "yarn lint --fix --"
+  }
+}

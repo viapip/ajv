@@ -1,0 +1,752 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Charset": {
+      "enum": ["ascii", "utf8"],
+      "type": "string"
+    },
+    "Drop": {
+      "enum": ["console", "debugger"],
+      "type": "string"
+    },
+    "FilterPattern": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RegExp"
+        },
+        {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/RegExp"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "A valid `picomatch` glob pattern, or array of patterns."
+    },
+    "Format": {
+      "enum": ["cjs", "esm", "iife"],
+      "type": "string"
+    },
+    "LogLevel": {
+      "enum": ["debug", "error", "info", "silent", "verbose", "warning"],
+      "type": "string"
+    },
+    "Omit<TransformOptions,\"sourcemap\"|\"loader\">": {
+      "properties": {
+        "banner": {
+          "description": "Documentation: https://esbuild.github.io/api/#banner",
+          "type": "string"
+        },
+        "charset": {
+          "$ref": "#/definitions/Charset",
+          "description": "Documentation: https://esbuild.github.io/api/#charset"
+        },
+        "color": {
+          "description": "Documentation: https://esbuild.github.io/api/#color",
+          "type": "boolean"
+        },
+        "define": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Documentation: https://esbuild.github.io/api/#define",
+          "type": "object"
+        },
+        "drop": {
+          "description": "Documentation: https://esbuild.github.io/api/#drop",
+          "items": {
+            "$ref": "#/definitions/Drop"
+          },
+          "type": "array"
+        },
+        "dropLabels": {
+          "description": "Documentation: https://esbuild.github.io/api/#drop-labels",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "footer": {
+          "description": "Documentation: https://esbuild.github.io/api/#footer",
+          "type": "string"
+        },
+        "format": {
+          "$ref": "#/definitions/Format",
+          "description": "Documentation: https://esbuild.github.io/api/#format"
+        },
+        "globalName": {
+          "description": "Documentation: https://esbuild.github.io/api/#global-name",
+          "type": "string"
+        },
+        "ignoreAnnotations": {
+          "description": "Documentation: https://esbuild.github.io/api/#ignore-annotations",
+          "type": "boolean"
+        },
+        "jsx": {
+          "description": "Documentation: https://esbuild.github.io/api/#jsx",
+          "enum": ["automatic", "preserve", "transform"],
+          "type": "string"
+        },
+        "jsxDev": {
+          "description": "Documentation: https://esbuild.github.io/api/#jsx-development",
+          "type": "boolean"
+        },
+        "jsxFactory": {
+          "description": "Documentation: https://esbuild.github.io/api/#jsx-factory",
+          "type": "string"
+        },
+        "jsxFragment": {
+          "description": "Documentation: https://esbuild.github.io/api/#jsx-fragment",
+          "type": "string"
+        },
+        "jsxImportSource": {
+          "description": "Documentation: https://esbuild.github.io/api/#jsx-import-source",
+          "type": "string"
+        },
+        "jsxSideEffects": {
+          "description": "Documentation: https://esbuild.github.io/api/#jsx-side-effects",
+          "type": "boolean"
+        },
+        "keepNames": {
+          "description": "Documentation: https://esbuild.github.io/api/#keep-names",
+          "type": "boolean"
+        },
+        "legalComments": {
+          "description": "Documentation: https://esbuild.github.io/api/#legal-comments",
+          "enum": ["eof", "external", "inline", "linked", "none"],
+          "type": "string"
+        },
+        "lineLimit": {
+          "description": "Documentation: https://esbuild.github.io/api/#line-limit",
+          "type": "number"
+        },
+        "logLevel": {
+          "$ref": "#/definitions/LogLevel",
+          "description": "Documentation: https://esbuild.github.io/api/#log-level"
+        },
+        "logLimit": {
+          "description": "Documentation: https://esbuild.github.io/api/#log-limit",
+          "type": "number"
+        },
+        "logOverride": {
+          "$ref": "#/definitions/Record<string,LogLevel>",
+          "description": "Documentation: https://esbuild.github.io/api/#log-override"
+        },
+        "mangleCache": {
+          "$ref": "#/definitions/Record<string,string|false>",
+          "description": "Documentation: https://esbuild.github.io/api/#mangle-props"
+        },
+        "mangleProps": {
+          "$ref": "#/definitions/RegExp",
+          "description": "Documentation: https://esbuild.github.io/api/#mangle-props"
+        },
+        "mangleQuoted": {
+          "description": "Documentation: https://esbuild.github.io/api/#mangle-props",
+          "type": "boolean"
+        },
+        "minify": {
+          "description": "Documentation: https://esbuild.github.io/api/#minify",
+          "type": "boolean"
+        },
+        "minifyIdentifiers": {
+          "description": "Documentation: https://esbuild.github.io/api/#minify",
+          "type": "boolean"
+        },
+        "minifySyntax": {
+          "description": "Documentation: https://esbuild.github.io/api/#minify",
+          "type": "boolean"
+        },
+        "minifyWhitespace": {
+          "description": "Documentation: https://esbuild.github.io/api/#minify",
+          "type": "boolean"
+        },
+        "platform": {
+          "$ref": "#/definitions/Platform",
+          "description": "Documentation: https://esbuild.github.io/api/#platform"
+        },
+        "pure": {
+          "description": "Documentation: https://esbuild.github.io/api/#pure",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "reserveProps": {
+          "$ref": "#/definitions/RegExp",
+          "description": "Documentation: https://esbuild.github.io/api/#mangle-props"
+        },
+        "sourceRoot": {
+          "description": "Documentation: https://esbuild.github.io/api/#source-root",
+          "type": "string"
+        },
+        "sourcefile": {
+          "description": "Documentation: https://esbuild.github.io/api/#sourcefile",
+          "type": "string"
+        },
+        "sourcesContent": {
+          "description": "Documentation: https://esbuild.github.io/api/#sources-content",
+          "type": "boolean"
+        },
+        "supported": {
+          "$ref": "#/definitions/Record<string,boolean>",
+          "description": "Documentation: https://esbuild.github.io/api/#supported"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Documentation: https://esbuild.github.io/api/#target"
+        },
+        "treeShaking": {
+          "description": "Documentation: https://esbuild.github.io/api/#tree-shaking",
+          "type": "boolean"
+        },
+        "tsconfigRaw": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/TsconfigRaw"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Documentation: https://esbuild.github.io/api/#tsconfig-raw"
+        }
+      },
+      "type": "object"
+    },
+    "Options_1": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Omit<TransformOptions,\"sourcemap\"|\"loader\">"
+        },
+        {
+          "properties": {
+            "exclude": {
+              "$ref": "#/definitions/FilterPattern"
+            },
+            "include": {
+              "$ref": "#/definitions/FilterPattern"
+            },
+            "loaders": {
+              "additionalProperties": {
+                "enum": [
+                  "base64",
+                  "binary",
+                  "copy",
+                  "css",
+                  "dataurl",
+                  "default",
+                  "empty",
+                  false,
+                  "file",
+                  "js",
+                  "json",
+                  "jsx",
+                  "local-css",
+                  "text",
+                  "ts",
+                  "tsx"
+                ]
+              },
+              "description": "Map extension to esbuild loader\nNote that each entry (the extension) needs to start with a dot",
+              "type": "object"
+            },
+            "optimizeDeps": {},
+            "sourceMap": {
+              "type": "boolean"
+            },
+            "tsconfig": {
+              "anyOf": [
+                {
+                  "const": false,
+                  "type": "boolean"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "description": "Use this tsconfig file instead\nDisable it by setting to `false`"
+            }
+          },
+          "type": "object"
+        }
+      ]
+    },
+    "Options_2": {
+      "properties": {
+        "compilerOptions": {
+          "description": "In case you want to use TypeScript path-mapping feature, using the\n`baseUrl` and `paths` properties, you can pass in `compilerOptions`."
+        },
+        "respectExternal": {
+          "description": "The plugin will by default flag *all* external libraries as `external`,\nand thus prevent them from be bundled.\nIf you set the `respectExternal` option to `true`, the plugin will not do\nany default classification, but rather use the `external` option as\nconfigured via rollup.",
+          "type": "boolean"
+        },
+        "tsconfig": {
+          "description": "Path to tsconfig.json, by default, will try to load 'tsconfig.json'",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Platform": {
+      "enum": ["browser", "neutral", "node"],
+      "type": "string"
+    },
+    "Record<string,LogLevel>": {
+      "type": "object"
+    },
+    "Record<string,boolean>": {
+      "type": "object"
+    },
+    "Record<string,string[]>": {
+      "type": "object"
+    },
+    "Record<string,string|false>": {
+      "type": "object"
+    },
+    "RegExp": {
+      "properties": {
+        "dotAll": {
+          "type": "boolean"
+        },
+        "flags": {
+          "type": "string"
+        },
+        "global": {
+          "type": "boolean"
+        },
+        "ignoreCase": {
+          "type": "boolean"
+        },
+        "lastIndex": {
+          "type": "number"
+        },
+        "multiline": {
+          "type": "boolean"
+        },
+        "source": {
+          "type": "string"
+        },
+        "sticky": {
+          "type": "boolean"
+        },
+        "unicode": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RollupCommonJSOptions": {
+      "properties": {
+        "defaultIsModuleExports": {
+          "anyOf": [
+            {
+              "enum": ["auto", false, true]
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "default": "auto"
+        },
+        "dynamicRequireRoot": {
+          "description": "To avoid long paths when using the `dynamicRequireTargets` option, you can use this option to specify a directory\nthat is a common parent for all files that use dynamic require statements. Using a directory higher up such as `/`\nmay lead to unnecessarily long paths in the generated code and may expose directory names on your machine like your\nhome directory name. By default, it uses the current working directory.",
+          "type": "string"
+        },
+        "dynamicRequireTargets": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "description": "Some modules contain dynamic `require` calls, or require modules that\ncontain circular dependencies, which are not handled well by static\nimports. Including those modules as `dynamicRequireTargets` will simulate a\nCommonJS (NodeJS-like) environment for them with support for dynamic\ndependencies. It also enables `strictRequires` for those modules.\n\nNote: In extreme cases, this feature may result in some paths being\nrendered as absolute in the final bundle. The plugin tries to avoid\nexposing paths from the local machine, but if you are `dynamicRequirePaths`\nwith paths that are far away from your project's folder, that may require\nreplacing strings like `\"/Users/John/Desktop/foo-project/\"` -> `\"/\"`."
+        },
+        "esmExternals": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": ["object", "boolean"]
+            }
+          ],
+          "default": false,
+          "description": "Controls how to render imports from external dependencies. By default,\nthis plugin assumes that all external dependencies are CommonJS. This\nmeans they are rendered as default imports to be compatible with e.g.\nNodeJS where ES modules can only import a default export from a CommonJS\ndependency.\n\nIf you set `esmExternals` to `true`, this plugin assumes that all\nexternal dependencies are ES modules and respect the\n`requireReturnsDefault` option. If that option is not set, they will be\nrendered as namespace imports.\n\nYou can also supply an array of ids to be treated as ES modules, or a\nfunction that will be passed each external id to determine whether it is\nan ES module."
+        },
+        "exclude": {
+          "$ref": "#/definitions/FilterPattern",
+          "default": "undefined",
+          "description": "A picomatch pattern, or array of patterns, which specifies the files in\nthe build the plugin should _ignore_. By default, all files with\nextensions other than those in `extensions` or `\".cjs\"` are ignored, but you\ncan exclude additional files. See also the `include` option."
+        },
+        "extensions": {
+          "default": "[ '.js' ]",
+          "description": "For extensionless imports, search for extensions other than .js in the\norder specified. Note that you need to make sure that non-JavaScript files\nare transpiled by another plugin first.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ignore": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "default": [],
+          "description": "Sometimes you have to leave require statements unconverted. Pass an array\ncontaining the IDs or a `id => boolean` function."
+        },
+        "ignoreDynamicRequires": {
+          "default": false,
+          "description": "Some `require` calls cannot be resolved statically to be translated to\nimports.\nWhen this option is set to `false`, the generated code will either\ndirectly throw an error when such a call is encountered or, when\n`dynamicRequireTargets` is used, when such a call cannot be resolved with a\nconfigured dynamic require target.\nSetting this option to `true` will instead leave the `require` call in the\ncode or use it as a fallback for `dynamicRequireTargets`.",
+          "type": "boolean"
+        },
+        "ignoreGlobal": {
+          "default": false,
+          "description": "If true then uses of `global` won't be dealt with by this plugin",
+          "type": "boolean"
+        },
+        "ignoreTryCatch": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "enum": [false, "remove", true]
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "default": true,
+          "description": "In most cases, where `require` calls are inside a `try-catch` clause,\nthey should be left unconverted as it requires an optional dependency\nthat may or may not be installed beside the rolled up package.\nDue to the conversion of `require` to a static `import` - the call is\nhoisted to the top of the file, outside the `try-catch` clause.\n\n- `true`: Default. All `require` calls inside a `try` will be left unconverted.\n- `false`: All `require` calls inside a `try` will be converted as if the\n  `try-catch` clause is not there.\n- `remove`: Remove all `require` calls from inside any `try` block.\n- `string[]`: Pass an array containing the IDs to left unconverted.\n- `((id: string) => boolean|'remove')`: Pass a function that controls\n  individual IDs."
+        },
+        "include": {
+          "$ref": "#/definitions/FilterPattern",
+          "default": "undefined",
+          "description": "A picomatch pattern, or array of patterns, which specifies the files in\nthe build the plugin should operate on. By default, all files with\nextension `\".cjs\"` or those in `extensions` are included, but you can\nnarrow this list by only including specific files. These files will be\nanalyzed and transpiled if either the analysis does not find ES module\nspecific statements or `transformMixedEsModules` is `true`."
+        },
+        "requireReturnsDefault": {
+          "anyOf": [
+            {
+              "enum": ["auto", false, "namespace", "preferred", true]
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "default": false,
+          "description": "Controls what is returned when requiring an ES module from a CommonJS file.\nWhen using the `esmExternals` option, this will also apply to external\nmodules. By default, this plugin will render those imports as namespace\nimports i.e.\n\n```js\n// input\nconst foo = require('foo');\n\n// output\nimport * as foo from 'foo';\n```\n\nHowever, there are some situations where this may not be desired.\nFor these situations, you can change Rollup's behaviour either globally or\nper module. To change it globally, set the `requireReturnsDefault` option\nto one of the following values:\n\n- `false`: This is the default, requiring an ES module returns its\n  namespace. This is the only option that will also add a marker\n  `__esModule: true` to the namespace to support interop patterns in\n  CommonJS modules that are transpiled ES modules.\n- `\"namespace\"`: Like `false`, requiring an ES module returns its\n  namespace, but the plugin does not add the `__esModule` marker and thus\n  creates more efficient code. For external dependencies when using\n  `esmExternals: true`, no additional interop code is generated.\n- `\"auto\"`: This is complementary to how `output.exports: \"auto\"` works in\n  Rollup: If a module has a default export and no named exports, requiring\n  that module returns the default export. In all other cases, the namespace\n  is returned. For external dependencies when using `esmExternals: true`, a\n  corresponding interop helper is added.\n- `\"preferred\"`: If a module has a default export, requiring that module\n  always returns the default export, no matter whether additional named\n  exports exist. This is similar to how previous versions of this plugin\n  worked. Again for external dependencies when using `esmExternals: true`,\n  an interop helper is added.\n- `true`: This will always try to return the default export on require\n  without checking if it actually exists. This can throw at build time if\n  there is no default export. This is how external dependencies are handled\n  when `esmExternals` is not used. The advantage over the other options is\n  that, like `false`, this does not add an interop helper for external\n  dependencies, keeping the code lean.\n\nTo change this for individual modules, you can supply a function for\n`requireReturnsDefault` instead. This function will then be called once for\neach required ES module or external dependency with the corresponding id\nand allows you to return different values for different modules."
+        },
+        "sourceMap": {
+          "default": true,
+          "description": "If false, skips source map generation for CommonJS modules. This will\nimprove performance.",
+          "type": "boolean"
+        },
+        "strictRequires": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RegExp"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/RegExp"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": ["string", "boolean"]
+            }
+          ],
+          "default": "auto",
+          "description": "By default, this plugin will try to hoist `require` statements as imports\nto the top of each file. While this works well for many code bases and\nallows for very efficient ESM output, it does not perfectly capture\nCommonJS semantics as the order of side effects like log statements may\nchange. But it is especially problematic when there are circular `require`\ncalls between CommonJS modules as those often rely on the lazy execution of\nnested `require` calls.\n\nSetting this option to `true` will wrap all CommonJS files in functions\nwhich are executed when they are required for the first time, preserving\nNodeJS semantics. Note that this can have an impact on the size and\nperformance of the generated code.\n\nThe default value of `\"auto\"` will only wrap CommonJS files when they are\npart of a CommonJS dependency cycle, e.g. an index file that is required by\nmany of its dependencies. All other CommonJS files are hoisted. This is the\nrecommended setting for most code bases.\n\n`false` will entirely prevent wrapping and hoist all files. This may still\nwork depending on the nature of cyclic dependencies but will often cause\nproblems.\n\nYou can also provide a picomatch pattern, or array of patterns, to only\nspecify a subset of files which should be wrapped in functions for proper\n`require` semantics.\n\n`\"debug\"` works like `\"auto\"` but after bundling, it will display a warning\ncontaining a list of ids that have been wrapped which can be used as\npicomatch pattern for fine-tuning."
+        },
+        "transformMixedEsModules": {
+          "default": false,
+          "description": "Instructs the plugin whether to enable mixed module transformations. This\nis useful in scenarios with modules that contain a mix of ES `import`\nstatements and CommonJS `require` expressions. Set to `true` if `require`\ncalls should be transformed to imports in mixed modules, or `false` if the\n`require` expressions should survive the transformation. The latter can be\nimportant if the code contains environment detection, or you are coding\nfor an environment with special treatment for `require` calls such as\nElectronJS. See also the `ignore` option.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RollupJsonOptions": {
+      "properties": {
+        "compact": {
+          "default": false,
+          "description": "Ignores indent and generates the smallest code",
+          "type": "boolean"
+        },
+        "exclude": {
+          "$ref": "#/definitions/FilterPattern",
+          "description": "All JSON files will be parsed by default,\nbut you can also specifically exclude files"
+        },
+        "include": {
+          "$ref": "#/definitions/FilterPattern",
+          "description": "All JSON files will be parsed by default,\nbut you can also specifically include files"
+        },
+        "indent": {
+          "default": "'\\t'",
+          "description": "Specify indentation for the generated default export",
+          "type": "string"
+        },
+        "namedExports": {
+          "default": true,
+          "description": "Generate a named export for every property of the JSON object",
+          "type": "boolean"
+        },
+        "preferConst": {
+          "default": false,
+          "description": "For tree-shaking, properties will be declared as variables, using\neither `var` or `const`.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RollupNodeResolveOptions": {
+      "properties": {
+        "allowExportsFolderMapping": {
+          "default": true,
+          "description": "Allow folder mappings in package exports (trailing /)\nThis was deprecated in Node 14 and removed with Node 17, see DEP0148.\nSo this option might be changed to default to `false` in a future release.",
+          "type": "boolean"
+        },
+        "browser": {
+          "default": false,
+          "description": "If `true`, instructs the plugin to use the `\"browser\"` property in `package.json`\nfiles to specify alternative files to load for bundling. This is useful when\nbundling for a browser environment. Alternatively, a value of `'browser'` can be\nadded to the `mainFields` option. If `false`, any `\"browser\"` properties in\npackage files will be ignored. This option takes precedence over `mainFields`.",
+          "type": "boolean"
+        },
+        "dedupe": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "description": "An `Array` of modules names, which instructs the plugin to force resolving for the\nspecified modules to the root `node_modules`. Helps to prevent bundling the same\npackage multiple times if package is imported from dependencies."
+        },
+        "exportConditions": {
+          "description": "Additional conditions of the package.json exports field to match when resolving modules.\nBy default, this plugin looks for the `'default', 'module', 'import']` conditions when resolving imports.\n\nWhen using `@rollup/plugin-commonjs` v16 or higher, this plugin will use the\n`['default', 'module', 'import']` conditions when resolving require statements.\n\nSetting this option will add extra conditions on top of the default conditions.\nSee https://nodejs.org/api/packages.html#packages_conditional_exports for more information.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "extensions": {
+          "default": "[ '.mjs', '.js', '.json', '.node' ]",
+          "description": "Specifies the extensions of files that the plugin will operate on.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "jail": {
+          "default": "'/'",
+          "description": "Locks the module search within specified path (e.g. chroot). Modules defined\noutside this path will be marked as external.",
+          "type": "string"
+        },
+        "mainFields": {
+          "default": "['module', 'main']",
+          "description": "Specifies the properties to scan within a `package.json`, used to determine the\nbundle entry point.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "moduleDirectories": {
+          "default": "['node_modules']",
+          "description": "A list of directory names in which to recursively look for modules.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "modulePaths": {
+          "default": [],
+          "description": "A list of absolute paths to additional locations to search for modules.\nThis is analogous to setting the `NODE_PATH` environment variable for node.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "modulesOnly": {
+          "default": false,
+          "description": "If `true`, inspect resolved files to assert that they are ES2015 modules.",
+          "type": "boolean"
+        },
+        "preferBuiltins": {
+          "default": true,
+          "description": "If `true`, the plugin will prefer built-in modules (e.g. `fs`, `path`). If `false`,\nthe plugin will look for locally installed modules of the same name.",
+          "type": "boolean"
+        },
+        "resolveOnly": {
+          "anyOf": [
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/RegExp"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "default": [],
+          "description": "An `Array` which instructs the plugin to limit module resolution to those whose\nnames match patterns in the array."
+        },
+        "rootDir": {
+          "default": "process.cwd()",
+          "description": "Specifies the root directory from which to resolve modules. Typically used when\nresolving entry-point imports, and when resolving deduplicated modules.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TsconfigRaw": {
+      "properties": {
+        "compilerOptions": {
+          "properties": {
+            "alwaysStrict": {
+              "type": "boolean"
+            },
+            "baseUrl": {
+              "type": "string"
+            },
+            "experimentalDecorators": {
+              "type": "boolean"
+            },
+            "importsNotUsedAsValues": {
+              "enum": ["error", "preserve", "remove"],
+              "type": "string"
+            },
+            "jsx": {
+              "enum": [
+                "preserve",
+                "react",
+                "react-jsx",
+                "react-jsxdev",
+                "react-native"
+              ],
+              "type": "string"
+            },
+            "jsxFactory": {
+              "type": "string"
+            },
+            "jsxFragmentFactory": {
+              "type": "string"
+            },
+            "jsxImportSource": {
+              "type": "string"
+            },
+            "paths": {
+              "$ref": "#/definitions/Record<string,string[]>"
+            },
+            "preserveValueImports": {
+              "type": "boolean"
+            },
+            "strict": {
+              "type": "boolean"
+            },
+            "target": {
+              "type": "string"
+            },
+            "useDefineForClassFields": {
+              "type": "boolean"
+            },
+            "verbatimModuleSyntax": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "properties": {
+    "commonjs": {
+      "$ref": "#/definitions/RollupCommonJSOptions"
+    },
+    "cwd": {
+      "type": "string"
+    },
+    "dts": {
+      "$ref": "#/definitions/Options_2"
+    },
+    "esbuild": {
+      "$ref": "#/definitions/Options_1"
+    },
+    "input": {
+      "type": "string"
+    },
+    "json": {
+      "$ref": "#/definitions/RollupJsonOptions"
+    },
+    "pkg": {
+      "type": "string"
+    },
+    "resolve": {
+      "$ref": "#/definitions/RollupNodeResolveOptions"
+    },
+    "src": {
+      "type": "string"
+    },
+    "tsconfig": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}
