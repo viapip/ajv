@@ -44,7 +44,7 @@
     "release": "yarn npm publish",
     "clean": "yarn exec rm -rf dist",
     "lint": "yarn eslint --config eslint.config.js",
-    "server": "yarn tsx --watch src/server",
+    "dev": "yarn tsx --watch src",
     "client": "yarn tsx --watch src/client",
     "workers": "yarn tsx --watch src/workers",
     "generate:types": "yarn tsx scripts/generate_types.ts",
@@ -85,6 +85,7 @@
   "devDependencies": {
     "@regioni/lib": "workspace:^",
     "esbuild": "^0.21.5",
-    "rollup": "^4.14.0"
+    "rollup": "^4.14.0",
+    "tsx": "^4.7.2"
   }
 }

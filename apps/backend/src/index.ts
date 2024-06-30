@@ -9,7 +9,6 @@ import { router } from './router'
 import type { Router } from './router'
 
 const logger = consola.withTag('server')
-
 export const app = createHTTPServer({
   router,
   createContext,
@@ -37,3 +36,4 @@ applyWSSHandler<Router>({
 })
 
 app.listen(4000)
+logger.info('Listening on 4000')

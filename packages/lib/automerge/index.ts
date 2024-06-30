@@ -1,6 +1,6 @@
 import { Loro } from 'loro-crdt'
 
-import { uint8ArrayToString } from '@/transformer'
+import { uint8ArrayToString } from '../transformer'
 
 import type { LoroEvent, LoroMap } from 'loro-crdt'
 

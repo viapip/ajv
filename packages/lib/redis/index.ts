@@ -1,8 +1,14 @@
-import { createClient } from 'redis'
+import { 
+  createClient, 
+  RedisClientOptions, 
+  RedisModules, 
+  RedisFunctions, 
+  RedisScripts 
+} from 'redis'
 
 
-export async function createRedisStore() {
-  const connection = createClient({ url: 'redis://redis:6379' })
+export async function createRedisStore(options: RedisClientOptions<RedisModules, RedisFunctions, RedisScripts>) {
+  const connection = createClient(options)
   await connection.connect()
 
   function createCRUD<T = unknown>(prefix = '') {
