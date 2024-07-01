@@ -63,6 +63,10 @@
     "./ws": {
       "import": "./dist/ws/index.js",
       "types": "./dist/ws/index.d.ts"
+    },
+    "./ws/browser": {
+      "import": "./dist/ws/browser.js",
+      "types": "./dist/ws/browser.d.ts"
     }
   },
   "files": [

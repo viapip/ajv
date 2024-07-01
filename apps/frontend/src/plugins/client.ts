@@ -1,8 +1,9 @@
-import { WebSocketBrowserProxy, transformer } from '@sozdev/share-libs/dist/browser'
+import {  transformer } from '@regioni/lib/transformer'
+import { WebSocketBrowserProxy } from '@regioni/lib/ws/browser'
 import { type CreateTRPCProxyClient, createTRPCProxyClient, createWSClient, wsLink } from '@trpc/client'
 import consola from 'consola'
 
-import type { AppRouter } from '@sozdev/backend'
+import type { Router as AppRouter } from '@regioni/backend'
 
 declare module '#app/nuxt' {
   export interface NuxtApp {

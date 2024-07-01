@@ -9,7 +9,7 @@ export default build({
 
   input: './index.ts',
   pkg: './package.json',
-  tsconfig: './tsconfig.build.json',
+  tsconfig: './tsconfig.json',
   plugins: [
     wasm(),
     // nodePolyfills(),
@@ -18,10 +18,13 @@ export default build({
   esbuild: {
     minify: true,
   },
+  dts: {
+    respectExternal: true,
+  },
 
   resolve: {
-    modulePaths: [],
-    preferBuiltins: false,
+    // modulePaths: [],
+    preferBuiltins: true,
   },
   json: {
     compact: true,
