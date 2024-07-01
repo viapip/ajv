@@ -48,7 +48,7 @@
     "frontend:build": "yarn workspace @regioni/nuxt-frontend run build",
     "backend:dev": "yarn workspace @regioni/backend dev",
     "backend:build": "yarn workspace @regioni/backend run build",
-    "packages:build": "yarn workspace @regioni/build run build && yarn workspace",
+    "packages:build": "yarn workspace @regioni/build run build && yarn workspace @regioni/lib run build",
     "generate:types": "yarn tsx scripts/generate_types.ts",
     "generate:keys": "yarn tsx scripts/generate_keys.ts"
   },

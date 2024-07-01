@@ -7,7 +7,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import defu from 'defu'
-import { defineConfig } from 'rollup'
+import { InputPluginOption, defineConfig } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 
@@ -44,6 +44,7 @@ export interface Options {
   commonjs?: RollupCommonJSOptions
   esbuild?: RollupEsbuildOptions
   dts?: RollupDtsOptions
+  plugins?: InputPluginOption[]
 }
 
 function build(options?: Options) {
@@ -89,12 +90,14 @@ function build(options?: Options) {
     },
     resolve: {
       preferBuiltins: true,
+      
     },
     commonjs: {
-      exclude: external,
+      // exclude: external,
     },
     esbuild: {
-      exclude: external,
+      // include: external,
+      // exclude: external,
       minify: true,
       tsconfig: tsconfigFile,
     },
@@ -133,6 +136,7 @@ function build(options?: Options) {
         resolve(opts.resolve),
         commonjs(opts.commonjs),
         esbuild(opts.esbuild),
+        ...(opts.plugins || [])
       ],
     },
     {

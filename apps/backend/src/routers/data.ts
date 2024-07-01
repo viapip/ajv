@@ -1,4 +1,4 @@
-import { queueEvents } from '@regioni/lib/bullmq/events'
+import { queueEvents } from '@regioni/lib/bullmq'
 import { observable } from '@trpc/server/observable'
 import consola from 'consola'
 import { z } from 'zod'
