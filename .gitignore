@@ -29,3 +29,5 @@ core
 # Other
 .scraper-*
 *.log*
+
+.idea
