@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg version="1.1" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+	<circle cx="60" cy="60" r="60" fill="#fff" stroke-linecap="square" stroke-linejoin="bevel" style="paint-order:markers fill stroke"/>
+	<g transform="translate(10,10)">
+		<path d="m100 50-6-3-3-6-3 6-6 3 6 3 3 6 3-6z" fill="#d91438"/>
+		<g fill="#1a3678">
+			<path d="m71 20-9 30 9 30 9-30z"/>
+			<path d="m50 0-10 50 10 50 10-50z"/>
+			<path d="m29 20-9 30 9 30 9-30z"/>
+		</g>
+		<path d="m0 50 6-3 3-6 3 6 6 3-6 3-3 6-3-6z" fill="#d91438"/>
+	</g>
+</svg>

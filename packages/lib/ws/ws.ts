@@ -1,8 +1,8 @@
 import consola from 'consola'
 import { WebSocket } from 'ws'
 
-import { jwks, keys1 } from '@/jose/keys'
-import { sign, verify } from '@/jose/sign'
+// import { jwks, keys1 } from '@/jose/keys'
+// import { sign, verify } from '@/jose/sign'
 
 import type { Buffer } from 'node:buffer'
 import type { ClientOptions } from 'ws'
@@ -62,10 +62,11 @@ async function customOn(
   this.on(event, async (...args: any[]) => {
     if (event === 'message') {
       const [data, isBinary] = args as [BufferLike, boolean]
-      const jws = await verify(data.toString(), jwks)
-      logger.log('Receiving', event, JSON.stringify(jws))
+      // const jws = await verify(data.toString(), jwks)
+      // logger.log('Receiving', event, JSON.stringify(jws))
 
-      listener.call(this, JSON.stringify(jws), isBinary)
+      // listener.call(this, JSON.stringify(jws), isBinary)
+      listener.call(this, data.toString(), isBinary)
 
       return
     }
@@ -79,8 +80,8 @@ async function customSend(
   data: BufferLike,
   cb?: (error?: Error) => void,
 ) {
-  const jws = await sign(keys1, JSON.parse(data.toString()))
-  logger.log('Sending', jws)
+  // const jws = await sign(keys1, JSON.parse(data.toString()))
+  // logger.log('Sending', jws)
 
-  this.send(jws, cb)
+  this.send(data, cb)
 }

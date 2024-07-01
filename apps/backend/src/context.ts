@@ -16,7 +16,9 @@ export async function createContext(
   _opts: CreateContextOptions,
 ) {
   const ajv = await createAjv()
-  const redis = await createRedisStore()
+  const redis = await createRedisStore({
+    url: 'redis://redis:6379',
+  })
 
   return {
     ajv,
