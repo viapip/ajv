@@ -15,8 +15,58 @@
   "bugs": "https://gitea.local/regioni/lib/issues",
   "keywords": [],
   "sideEffects": false,
+  "exports": {
+    "./ajv": {
+      "import": "./dist/ajv/index.js",
+      "types": "./dist/ajv/index.d.ts"
+    },
+    "./automerge": {
+      "import": "./dist/automerge/index.js",
+      "types": "./dist/automerge/index.d.ts"
+    },
+    "./bullmq": {
+      "import": "./dist/bullmq/index.js",
+      "types": "./dist/bullmq/index.d.ts"
+    },
+    "./jose": {
+      "import": "./dist/jose/index.js",
+      "types": "./dist/jose/index.d.ts"
+    },
+    "./logger": {
+      "import": "./dist/logger/index.js",
+      "types": "./dist/logger/index.d.ts"
+    },
+    "./mongodb": {
+      "import": "./dist/mongodb/index.js",
+      "types": "./dist/mongodb/index.d.ts"
+    },
+    "./quicktype": {
+      "import": "./dist/quicktype/index.js",
+      "types": "./dist/quicktype/index.d.ts"
+    },
+    "./redis": {
+      "import": "./dist/redis/index.js",
+      "types": "./dist/redis/index.d.ts"
+    },
+    "./radix": {
+      "import": "./dist/radix/index.js",
+      "types": "./dist/radix/index.d.ts"
+    },
+    "./superjson": {
+      "import": "./dist/superjson/index.js",
+      "types": "./dist/superjson/index.d.ts"
+    },
+    "./transformer": {
+      "import": "./dist/transformer/index.js",
+      "types": "./dist/transformer/index.d.ts"
+    },
+    "./ws": {
+      "import": "./dist/ws/index.js",
+      "types": "./dist/ws/index.d.ts"
+    }
+  },
   "files": [
-    "*"
+    "dist"
   ],
   "scripts": {
     "build": "yarn tsc -b",
@@ -48,7 +98,7 @@
     "esno": "^4.7.0",
     "lint-staged": "^15.2.7",
     "simple-git-hooks": "^2.9.0",
-    "typescript": "^5.2.2",
+    "typescript": "^5.5.2",
     "typescript-json-schema": "0.62.0"
   },
   "simple-git-hooks": {

@@ -5,7 +5,7 @@ import consola from 'consola'
 import glob from 'fast-glob'
 import { TypeScriptTargetLanguage } from 'quicktype-core'
 
-import { quicktypeMultipleJSONSchema } from '@/quicktype'
+import { quicktypeMultipleJSONSchema } from '@regioni/lib/src/quicktype'
 
 import type { JSONSchemaSourceData } from 'quicktype-core'
 
