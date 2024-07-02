@@ -7,16 +7,27 @@
       "DOM"
     ],
     "baseUrl": ".",
-    "rootDir": ".",
+    "rootDir": "./src/",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "noResolve": false,
+    "paths": {
+      // "~/*": [
+      //   "src/*"
+      // ],
+      "@/*": [
+        "src/*"
+      ],
+      "types/*": [
+        "types/*"
+      ]
+    },
     "resolveJsonModule": true,
     "resolvePackageJsonExports": true,
     "resolvePackageJsonImports": true,
     "allowJs": true,
     "strict": true,
-    "declaration": false,
+    "declaration": true,
     "importHelpers": true,
     "outDir": "dist",
     "sourceMap": true,
@@ -26,6 +37,9 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*"
+    "types/**/*",
+    "src/**/*",
+    "lib/**/*",
+    "scripts/**/*"
   ]
 }

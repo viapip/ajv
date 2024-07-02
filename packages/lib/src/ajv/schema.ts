@@ -1,9 +1,9 @@
 import type { JSONSchemaType } from 'ajv'
-import type { TestUserInfo } from 'types'
+// import type { TestUserInfo } from 'types'
 
 export const userSchema: JSONSchemaType<{
   status: string
-  info?: TestUserInfo
+  // info?: TestUserInfo
   date: string
 }> = {
   type: 'object',

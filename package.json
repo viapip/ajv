@@ -48,7 +48,7 @@
     "frontend:build": "yarn workspace @regioni/nuxt-frontend run build",
     "backend:dev": "yarn workspace @regioni/backend dev",
     "backend:build": "yarn workspace @regioni/backend run build",
-    "packages:build": "yarn workspace @regioni/build run build && yarn workspace",
+    "packages:build": "yarn workspace @regioni/build run build && yarn workspace @regioni/lib run build",
     "generate:types": "yarn tsx scripts/generate_types.ts",
     "generate:keys": "yarn tsx scripts/generate_keys.ts"
   },
@@ -57,6 +57,7 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@regioni/lib": "workspace:^",
     "@sozdev/eslint-config": "^0.0.11",
     "@sozdev/rollup-build": "^0.0.10",
     "@types/ws": "^8.5.10",

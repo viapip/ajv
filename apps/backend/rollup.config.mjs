@@ -1,4 +1,8 @@
 import build from '@regioni/build'
+import wasm from '@rollup/plugin-wasm'
+
+// import { terser } from 'rollup-plugin-terser'
+// import nodePolyfills from 'rollup-plugin-node-polyfills'
 
 export default build({
   src: './src',

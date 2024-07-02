@@ -22,6 +22,7 @@ await ipfs.start()
 
 const keystore = await KeyStore({ path: keysPath })
 const identities = await Identities({ keystore, ipfs })
+
 const provider = PublicKeyIdentityProvider({ keystore })
 
 const identity = await identities.createIdentity({ id, provider })

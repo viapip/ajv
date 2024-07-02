@@ -1,15 +1,19 @@
 import consola from 'consola'
 import { WebSocketServer } from 'ws'
 
-import { wrapSocket } from './ws'
+import { wrapSocket } from './wrapper'
 
+import type { IJoseVerify } from '../jose/types'
 import type { ServerOptions, WebSocket } from 'ws'
 
 const logger = consola.withTag('wss')
 
 export class WebSocketServerProxy extends WebSocketServer {
-  public constructor(options?: ServerOptions, callback?: () => void) {
+  jose?: IJoseVerify
+  public constructor(options?: ServerOptions, jose?: IJoseVerify, callback?: () => void) {
     super(options, callback)
+    this.jose = jose
+    logger.info('new WebSocketServer', jose)
 
     return wrapSocketServer(this)
   }
@@ -35,7 +39,7 @@ async function customOn(
   this.on(event, async (...args: any[]) => {
     if (event === 'connection') {
       logger.info('Connection')
-      args[0] = wrapSocket(args[0] as WebSocket)
+      args[0] = wrapSocket(args[0] as WebSocket, this.jose)
     }
 
     listener.call(this, ...args)

@@ -99,12 +99,12 @@ function build(options?: Options) {
     },
     resolve: {
       preferBuiltins: true,
+      
     },
     commonjs: {
       exclude: external,
     },
     esbuild: {
-      exclude: external,
       minify: true,
       tsconfig: tsconfigFile,
     },
