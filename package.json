@@ -57,6 +57,7 @@
     "apps/*"
   ],
   "devDependencies": {
+    "@regioni/eslint-config": "workspace:^",
     "@regioni/lib": "workspace:^",
     "@sozdev/eslint-config": "^0.0.11",
     "@sozdev/rollup-build": "^0.0.10",

@@ -1,5 +1,5 @@
 {
-  "name": "@regioni/nuxt-frontend",
+  "name": "@regioni/frontend",
   "type": "module",
   "packageManager": "yarn@4.0.1",
   "scripts": {

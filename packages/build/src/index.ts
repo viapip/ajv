@@ -2,14 +2,13 @@ import * as fs from 'node:fs'
 import * as path from 'node:path'
 import * as process from 'node:process'
 
-import glob from 'fast-glob'
-
 import alias from '@rollup/plugin-alias'
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import defu from 'defu'
-import { RollupOptions, defineConfig } from 'rollup'
+import glob from 'fast-glob'
+import { defineConfig } from 'rollup'
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 
@@ -17,6 +16,7 @@ import type { RollupAliasOptions } from '@rollup/plugin-alias'
 import type { RollupCommonJSOptions } from '@rollup/plugin-commonjs'
 import type { RollupJsonOptions } from '@rollup/plugin-json'
 import type { RollupNodeResolveOptions } from '@rollup/plugin-node-resolve'
+import type { RollupOptions } from 'rollup'
 import type { Options as RollupDtsOptions } from 'rollup-plugin-dts'
 import type { Options as RollupEsbuildOptions } from 'rollup-plugin-esbuild'
 
@@ -58,13 +58,12 @@ function build(options?: Options) {
   const pkgFile = path.join(cwdDir, options?.pkg || 'package.json')
   const tsconfigFile = path.join(cwdDir, options?.tsconfig || 'tsconfig.json')
 
-  const inputFiles = options?.input?.flatMap((file) =>
+  const inputFiles = options?.input?.flatMap(file =>
     glob.sync(path.resolve(srcDir, file)),
   )
 
-  if (!inputFiles) {
+  if (!inputFiles)
     throw new Error('No input files found')
-  }
 
   const pkg: PackageJson = JSON.parse(
     fs.readFileSync(pkgFile, { encoding: 'utf-8' }),
@@ -99,7 +98,7 @@ function build(options?: Options) {
     },
     resolve: {
       preferBuiltins: true,
-      
+
     },
     commonjs: {
       exclude: external,
@@ -116,13 +115,13 @@ function build(options?: Options) {
 
   const opts = defu(
     options,
-    defaultOptions
+    defaultOptions,
   )
 
   return defineConfig(
     inputFiles.flatMap((input) => {
       console.log(`Building ${input}`)
-      
+
       const basename = path.relative(srcDir, input).replace(/\.[^.]+$/, '')
 
       const rollupOptions: RollupOptions = {
@@ -171,7 +170,7 @@ function build(options?: Options) {
 
       return [
         rollupOptions,
-        dtsOptions
+        dtsOptions,
       ]
     }),
   )

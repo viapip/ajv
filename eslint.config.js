@@ -1,4 +1,4 @@
-import config from '@sozdev/eslint-config'
+import config from '@regioni/eslint-config'
 import eslintPluginStylisticTs from '@stylistic/eslint-plugin-ts'
 
 /** @type {import('eslint').Linter.FlatConfig} */

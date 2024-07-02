@@ -21,7 +21,7 @@
   "where-am-i.color": "#fff",
   "eslint.format.enable": true,
   "eslint.lintTask.enable": true,
-  "eslint.experimental.useFlatConfig": true,
+  "eslint.useFlatConfig": true,
   "eslint.validate": [
     "javascript",
     "javascriptreact",

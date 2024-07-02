@@ -24,7 +24,7 @@
   },
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "typesVersions": {
     "*": {
       "*": [

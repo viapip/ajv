@@ -7,14 +7,16 @@ import { createContext } from './context'
 import { router } from './router'
 
 import type { Router } from './router'
-export * from './router'
 
+const ww = 's'
+console.log(ww)
+export * from './router'
 const logger = consola.withTag('server')
 export const app = createHTTPServer({
   router,
   createContext,
   batching: { enabled: true },
-  
+
   onError({ error }) {
     if (error.code === 'INTERNAL_SERVER_ERROR') {
       logger.error(error)
