@@ -1,8 +1,8 @@
 import { sleep } from '@antfu/utils'
+import { createLogger } from '@regioni/lib/logger'
 import { Worker } from 'bullmq'
-import consola from 'consola'
 
-const logger = consola.withTag('worker')
+const logger = createLogger()
 
 const worker = new Worker<
   { message: string },
@@ -31,9 +31,9 @@ const worker = new Worker<
 )
 
 worker.on('completed', (job) => {
-  logger.success('Job completed', job.returnvalue)
+  logger.info('Job completed', job.returnvalue)
 })
 
 worker.on('failed', (job, err) => {
-  logger.error(err, job?.data)
+  logger.error(err.message, job?.data)
 })

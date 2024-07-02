@@ -11,7 +11,7 @@ import { Simplebar } from '#components'
 const props = withDefaults(defineProps<{
   dataIds: string[]
   dataGetter: (id: string) => Promise<ComputedRef<T | undefined> | ComputedRef<T | undefined>[]>
-  dataComponent?: Component<{ item: T | T[], index: number }>
+  dataComponent?: Component<{ item: T | T[]; index: number }>
   dataKey: string
   dataCursor?: number
   keeps?: number
@@ -79,15 +79,15 @@ const dataIds = toRef(props, 'dataIds')
 
 const isHorizontal = computed(() => direction.value === 'horizontal')
 
-const offsetSizeKey = computed<'scrollLeft' | 'scrollTop'>(() => {
-  return isHorizontal.value ? 'scrollLeft' : 'scrollTop'
-})
-const clientSizeKey = computed<'clientWidth' | 'clientHeight'>(() => {
-  return isHorizontal.value ? 'clientWidth' : 'clientHeight'
-})
-const scrollSizeKey = computed<'scrollWidth' | 'scrollHeight'>(() => {
-  return isHorizontal.value ? 'scrollWidth' : 'scrollHeight'
-})
+const offsetSizeKey = computed<'scrollLeft' | 'scrollTop'>(() => isHorizontal.value
+  ? 'scrollLeft'
+  : 'scrollTop')
+const clientSizeKey = computed<'clientWidth' | 'clientHeight'>(() => isHorizontal.value
+  ? 'clientWidth'
+  : 'clientHeight')
+const scrollSizeKey = computed<'scrollWidth' | 'scrollHeight'>(() => isHorizontal.value
+  ? 'scrollWidth'
+  : 'scrollHeight')
 
 const wrapperStyle = ref<Record<string, any>>({})
 const vr = ref<[number, number]>([
@@ -132,8 +132,7 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  if (props.pageMode)
-    document.removeEventListener('scroll', onScroll)
+  if (props.pageMode) { document.removeEventListener('scroll', onScroll) }
 })
 
 // set back offset when awake from keep-alive
@@ -148,8 +147,7 @@ onActivated(() => {
 })
 
 onDeactivated(() => {
-  if (props.pageMode)
-    document.removeEventListener('scroll', onScroll)
+  if (props.pageMode) { document.removeEventListener('scroll', onScroll) }
 })
 
 watch(
@@ -190,8 +188,7 @@ function onScroll(evt: Event) {
     offsetSize < 0
     || offsetSize + clientSize > scrollSize + 1
     || !scrollSize
-  )
-    return
+  ) { return }
 
   emitScrollEvent(offsetSize, clientSize, scrollSize, evt)
   v.handleScroll(Math.max(0, offsetSize - clientSize / 2))
@@ -206,8 +203,7 @@ function scrollToOffset(offset: number) {
     return
   }
 
-  if (scrollRef.value)
-    scrollRef.value[offsetSizeKey.value] = offset
+  if (scrollRef.value) { scrollRef.value[offsetSizeKey.value] = offset }
 }
 
 // set current scroll position to a expectant index
@@ -224,11 +220,12 @@ function scrollToIndex(index: number) {
 
 // set current scroll position to bottom
 function scrollToBottom() {
-  if (!shepherdRef.value)
-    return
+  if (!shepherdRef.value) { return }
 
   const offset
-    = shepherdRef.value[isHorizontal.value ? 'offsetLeft' : 'offsetTop']
+    = shepherdRef.value[isHorizontal.value
+      ? 'offsetLeft'
+      : 'offsetTop']
   scrollToOffset(offset)
 
   // check if it's really scrolled to the bottom
@@ -243,12 +240,10 @@ function scrollToBottom() {
 // when using page mode we need update slot header size manually
 // taking root offset relative to the browser as slot header size
 function updatePageModeFront() {
-  if (!scrollRef.value)
-    return
+  if (!scrollRef.value) { return }
 
   const { defaultView } = scrollRef.value.ownerDocument
-  if (!defaultView)
-    return
+  if (!defaultView) { return }
 
   const rect = scrollRef.value.getBoundingClientRect()
   const offsetFront = isHorizontal.value
@@ -275,8 +270,7 @@ function onSlotResized(type: string, size: number, init: boolean) {
       break
   }
 
-  if (init)
-    v.handleSlotSizeChange()
+  if (init) { v.handleSlotSizeChange() }
 }
 
 // here is the rerendering entry
@@ -307,8 +301,7 @@ function emitScrollEvent(
   if (
     v.isBehind()
     && offsetSize + clientSize + props.bottomThreshold >= scrollSize
-  )
-    emit('tobottom')
+  ) { emit('tobottom') }
 }
 
 function getWrapperStyle(

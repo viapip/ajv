@@ -8,9 +8,8 @@ import { router } from './router'
 
 import type { Router } from './router'
 
-const ww = 's'
-console.log(ww)
 export * from './router'
+
 const logger = consola.withTag('server')
 export const app = createHTTPServer({
   router,

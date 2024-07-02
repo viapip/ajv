@@ -1,16 +1,16 @@
 import { bitswap } from '@helia/block-brokers'
 import { Identities, KeyStore, OrbitDBAccessController, PublicKeyIdentityProvider, createOrbitDB } from '@orbitdb/core'
+import { createLogger } from '@regioni/lib/logger'
 import { createHelia } from 'helia'
 import { createLibp2p } from 'libp2p'
 
 import { DefaultLibp2pOptions } from './config'
-import initLogger  from '@regioni/lib/logger'
 
 const id = 'userA'
 const keysPath = './.out/keys'
 const options = DefaultLibp2pOptions
 
-const logger = initLogger()
+const logger = createLogger()
 
 const ipfs = await createHelia({
   libp2p: await createLibp2p({ ...options }),

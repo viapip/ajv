@@ -1,12 +1,12 @@
 // src/logger.ts
 import { inspect } from 'node:util'
 
-import { createLogger, format as f, transports as t } from 'winston'
+import { createLogger as createWinstonLogger, format as f, transports as t } from 'winston'
 
 import type { LoggerOptions } from 'winston'
 
-function initLogger(options?: LoggerOptions) {
-  return createLogger({
+export function createLogger(options?: LoggerOptions) {
+  return createWinstonLogger({
     defaultMeta: {
       service: 'service',
       version: '0.0.1',
@@ -104,11 +104,3 @@ function initLogger(options?: LoggerOptions) {
     ...options,
   })
 }
-
-// logger.log('info', 'test log')
-// logger.info('test info')
-// logger.warn('test warn')
-// logger.error(new Error('test error'))
-// logger.debug('test debug')
-
-export default initLogger
