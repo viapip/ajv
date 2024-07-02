@@ -1,10 +1,10 @@
+import { createLogger } from '@regioni/lib/logger'
 import { transformer } from '@regioni/lib/superjson'
 import { initTRPC } from '@trpc/server'
-import consola from 'consola'
 
 import type { Context } from './context'
 
-const logger = consola.withTag('trpc')
+const logger = createLogger()
 const t = initTRPC
   .meta()
   .context<Context>()
@@ -22,15 +22,16 @@ export const loggerMiddleware = t.middleware(async ({ next }) => {
   const result = await next()
   const duration = Date.now() - start
 
-  logger.log(`Request processed in ${duration}ms`)
+  logger.info(`Request processed in ${duration}ms`)
 
   // Log input and output
   if (result.ok) {
-    logger.log('Success:', result)
+    logger.info('Success:', result)
 
     return result
   }
-  console.error('Error:', result.error)
+
+  logger.error('Error:', result.error)
 
   return result
 })

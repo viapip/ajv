@@ -4,12 +4,6 @@ import wasm from 'vite-plugin-wasm'
 
 import { defaultLocale, locales } from './src/i18n'
 
-// const logger = consola.create({
-//   defaults: {
-//     tag: 'nuxt/config',
-//   },
-// })
-
 const srcDir = resolve(__dirname, 'src')
 const appDir = resolve(srcDir, 'app')
 
