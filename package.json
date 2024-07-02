@@ -61,7 +61,7 @@
     "@sozdev/eslint-config": "^0.0.11",
     "@sozdev/rollup-build": "^0.0.10",
     "@types/ws": "^8.5.10",
-    "eslint": "^9.5.0",
+    "eslint": "^8.56.5",
     "json-schema-migrate": "^2.0.0",
     "lint-staged": "^15.2.7",
     "quicktype-core": "^23.0.170",
