@@ -30,4 +30,6 @@ core
 .scraper-*
 *.log*
 
+.out
+
 .idea

@@ -45,7 +45,7 @@ export default defineNuxtPlugin(async (_nuxtApp) => {
           client: wsClient,
         }),
       ],
-      transformer,
+      // transformer,
     })
 
     nuxtApp.provide('trpc', client)

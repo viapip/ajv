@@ -14,7 +14,7 @@ export const app = createHTTPServer({
   router,
   createContext,
   batching: { enabled: true },
-
+  
   onError({ error }) {
     if (error.code === 'INTERNAL_SERVER_ERROR') {
       logger.error(error)
