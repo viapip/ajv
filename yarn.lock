@@ -5153,6 +5153,7 @@ __metadata:
     dotenv: "npm:^16.4.5"
     esbuild: "npm:^0.21.5"
     esno: "npm:^4.7.0"
+    fast-glob: "npm:^3.3.2"
     lint-staged: "npm:^15.2.7"
     rollup: "npm:^4.4.0"
     rollup-plugin-dts: "npm:^6.1.0"
@@ -5173,12 +5174,21 @@ __metadata:
     "@rollup/plugin-json": "npm:^6.1.0"
     "@rollup/plugin-node-resolve": "npm:^15.2.3"
     "@sozdev/eslint-config": "npm:^0.0.11"
+    "@trpc/server": "npm:^10.45.2"
+    "@types/events": "npm:^3"
+    ajv: "npm:^8.16.0"
+    ajv-errors: "npm:^3.0.0"
+    ajv-formats: "npm:^3.0.1"
+    ajv-i18n: "npm:^4.2.0"
+    ajv-keywords: "npm:^5.1.0"
     consola: "npm:^3.2.3"
     cross-env: "npm:7.0.3"
     defu: "npm:^6.1.4"
     dotenv: "npm:^16.4.5"
     esbuild: "npm:^0.21.5"
     esno: "npm:^4.7.0"
+    events: "npm:^3.3.0"
+    fast-glob: "npm:^3.3.2"
     lint-staged: "npm:^15.2.7"
     rollup: "npm:^4.4.0"
     rollup-plugin-dts: "npm:^6.1.0"
@@ -6246,6 +6256,13 @@ __metadata:
   version: 0.0.39
   resolution: "@types/estree@npm:0.0.39"
   checksum: 10/9f0f20990dbf725470564d4d815d3758ac688b790f601ea98654b6e0b9797dc3c80306fb525abdacd9e75e014e3d09ad326098eaa2ed1851e4823a8e278538aa
+  languageName: node
+  linkType: hard
+
+"@types/events@npm:^3":
+  version: 3.0.3
+  resolution: "@types/events@npm:3.0.3"
+  checksum: 10/50af9312fab001fd6bd4bb3ff65830f940877e6778de140a92481a0d9bf5f4853d44ec758a8800ef60e0598ac43ed1b5688116a3c65906ae54e989278d6c7c82
   languageName: node
   linkType: hard
 

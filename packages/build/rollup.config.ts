@@ -5,5 +5,5 @@ export default build({
 
   pkg: 'package.json',
   tsconfig: 'tsconfig.build.json',
-  input: 'index.ts',
+  input: ['index.ts'],
 })

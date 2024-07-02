@@ -15,6 +15,24 @@
   "bugs": "https://gitea.local/regioni/lib/issues",
   "keywords": [],
   "sideEffects": false,
+  "exports": {
+    "./ws": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/ws/index.mjs",
+      "require": "./dist/cjs/ws/index.cjs"
+    }
+  },
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
   "files": [
     "*"
   ],
@@ -33,11 +51,18 @@
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@trpc/server": "^10.45.2",
+    "ajv": "^8.16.0",
+    "ajv-errors": "^3.0.0",
+    "ajv-formats": "^3.0.1",
+    "ajv-i18n": "^4.2.0",
+    "ajv-keywords": "^5.1.0",
     "consola": "^3.2.3",
     "cross-env": "7.0.3",
     "defu": "^6.1.4",
     "dotenv": "^16.4.5",
     "esbuild": "^0.21.5",
+    "fast-glob": "^3.3.2",
     "rollup": "^4.4.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-esbuild": "^6.1.0",
@@ -45,7 +70,9 @@
   },
   "devDependencies": {
     "@sozdev/eslint-config": "^0.0.11",
+    "@types/events": "^3",
     "esno": "^4.7.0",
+    "events": "^3.3.0",
     "lint-staged": "^15.2.7",
     "simple-git-hooks": "^2.9.0",
     "typescript": "^5.2.2",
