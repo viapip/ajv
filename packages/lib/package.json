@@ -17,56 +17,56 @@
   "sideEffects": false,
   "exports": {
     "./ajv": {
-      "import": "./dist/ajv/index.js",
-      "types": "./dist/ajv/index.d.ts"
+      "types": "./dist/ajv/index.d.ts",
+      "import": "./dist/ajv/index.js"
     },
     "./automerge": {
-      "import": "./dist/automerge/index.js",
-      "types": "./dist/automerge/index.d.ts"
+      "types": "./dist/automerge/index.d.ts",
+      "import": "./dist/automerge/index.js"
     },
     "./bullmq": {
-      "import": "./dist/bullmq/index.js",
-      "types": "./dist/bullmq/index.d.ts"
+      "types": "./dist/bullmq/index.d.ts",
+      "import": "./dist/bullmq/index.js"
     },
     "./jose": {
-      "import": "./dist/jose/index.js",
-      "types": "./dist/jose/index.d.ts"
+      "types": "./dist/jose/index.d.ts",
+      "import": "./dist/jose/index.js"
     },
     "./logger": {
-      "import": "./dist/logger/index.js",
-      "types": "./dist/logger/index.d.ts"
+      "types": "./dist/logger/index.d.ts",
+      "import": "./dist/logger/index.js"
     },
     "./mongodb": {
-      "import": "./dist/mongodb/index.js",
-      "types": "./dist/mongodb/index.d.ts"
+      "types": "./dist/mongodb/index.d.ts",
+      "import": "./dist/mongodb/index.js"
     },
     "./quicktype": {
-      "import": "./dist/quicktype/index.js",
-      "types": "./dist/quicktype/index.d.ts"
+      "types": "./dist/quicktype/index.d.ts",
+      "import": "./dist/quicktype/index.js"
     },
     "./redis": {
-      "import": "./dist/redis/index.js",
-      "types": "./dist/redis/index.d.ts"
+      "types": "./dist/redis/index.d.ts",
+      "import": "./dist/redis/index.js"
     },
     "./radix": {
-      "import": "./dist/radix/index.js",
-      "types": "./dist/radix/index.d.ts"
+      "types": "./dist/radix/index.d.ts",
+      "import": "./dist/radix/index.js"
     },
     "./superjson": {
-      "import": "./dist/superjson/index.js",
-      "types": "./dist/superjson/index.d.ts"
+      "types": "./dist/superjson/index.d.ts",
+      "import": "./dist/superjson/index.js"
     },
     "./transformer": {
-      "import": "./dist/transformer/index.js",
-      "types": "./dist/transformer/index.d.ts"
+      "types": "./dist/transformer/index.d.ts",
+      "import": "./dist/transformer/index.js"
     },
     "./ws": {
-      "import": "./dist/ws/index.js",
-      "types": "./dist/ws/index.d.ts"
+      "types": "./dist/ws/index.d.ts",
+      "import": "./dist/ws/index.js"
     },
     "./ws/browser": {
-      "import": "./dist/ws/browser.js",
-      "types": "./dist/ws/browser.d.ts"
+      "types": "./dist/ws/browser.d.ts",
+      "import": "./dist/ws/browser.js"
     }
   },
   "files": [
@@ -82,42 +82,37 @@
     "lint": "yarn eslint --config eslint.config.js",
     "clean": "yarn exec rm -rf src"
   },
-  "dependencies": {
-    "@rollup/plugin-alias": "^5.1.0",
-    "@rollup/plugin-commonjs": "^26.0.1",
-    "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.2.3",
+  "peerDependencies": {
+    "@orbitdb/core": "^2.2.0",
     "@trpc/server": "^10.45.2",
+    "libp2p": "^1.7.0",
+    "zod": "^3.22.4"
+  },
+  "dependencies": {
     "ajv": "^8.16.0",
     "ajv-errors": "^3.0.0",
     "ajv-formats": "^3.0.1",
     "ajv-i18n": "^4.2.0",
     "ajv-keywords": "^5.1.0",
-    "consola": "^3.2.3",
-    "cross-env": "7.0.3",
-    "defu": "^6.1.4",
-    "dotenv": "^16.4.5",
-    "esbuild": "^0.21.5",
+    "bullmq": "^5.8.2",
     "fast-glob": "^3.3.2",
-    "rollup": "^4.4.0",
-    "rollup-plugin-dts": "^6.1.0",
-    "rollup-plugin-esbuild": "^6.1.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4"
+    "helia": "^4.2.4",
+    "jose": "^5.6.2",
+    "mongodb": "^6.8.0",
+    "superjson": "^2.2.1",
+    "winston": "^3.13.0",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
-    "@sozdev/eslint-config": "^0.0.11",
+    "@regioni/build": "workspace:^",
+    "@trpc/server": "^10.45.2",
     "@types/events": "^3",
+    "@types/orbitdb__core": "workspace:^",
     "esno": "^4.7.0",
     "events": "^3.3.0",
-    "lint-staged": "^15.2.7",
-    "simple-git-hooks": "^2.9.0",
+    "libp2p": "^1.7.0",
     "typescript": "^5.5.2",
-    "typescript-json-schema": "0.62.0"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "yarn lint-staged"
-  },
-  "lint-staged": {
-    "./src/**/*.{ts,js,yaml,yml,json,md,mdc,vue}": "yarn lint --fix --"
+    "typescript-json-schema": "0.62.0",
+    "zod": "^3.22.4"
   }
 }

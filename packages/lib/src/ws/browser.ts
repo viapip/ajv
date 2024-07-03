@@ -1,21 +1,19 @@
 import consola from 'consola'
 
-import { sign, verify } from '../jose/sign'
-
-import type { IJoseVerify } from '../jose/types'
+import type { IdentityInstance } from '@orbitdb/core'
 
 export * from './types'
 
 const logger = consola.withTag('ws/browser')
 export class WebSocketBrowserProxy extends WebSocket {
-  jose?: IJoseVerify
+  identity?: IdentityInstance
   public constructor(
     address: string | URL,
     protocols?: string | string[],
-    jose?: IJoseVerify,
+    identity?: IdentityInstance,
   ) {
     super(address, protocols)
-    this.jose = jose
+    this.identity = identity
 
     return wrapSocket(this)
   }
@@ -51,22 +49,23 @@ async function customOn(
       const [event] = args as [MessageEvent<string>]
       const data = event.data
 
-      if (!this.jose) {
+      if (!this.identity) {
         logger.debug('Receiving: jose not initialized', data)
 
         return listener.call(this, event)
       }
       try {
-        const { payload, ..._jws } = await verify(data.toString(), this.jose.jwks)
+        // const { payload, ..._jws } = await verify(data.toString(), this.identity.jwks)
 
-        const newEvent = createMessageEvent(event, payload)
+        // const newEvent = createMessageEvent(event, payload)
 
-        logger.debug('Receiving payload"', { payload, event: newEvent })
+        // logger.debug('Receiving payload"', { payload, event: newEvent })
 
-        return listener.call(this, newEvent)
+        return listener.call(this, ...args)
       }
       catch (error) {
         const newEvent = createMessageEvent(event, {})
+
         return listener.call(this, newEvent)
       }
     }
@@ -88,19 +87,20 @@ function createMessageEvent(event: MessageEvent, payload: unknown) {
 }
 
 async function customSend(this: WebSocketBrowserProxy, data: BufferLike) {
-  if (!this.jose) {
+  if (!this.identity) {
     logger.debug('Sending: jose not initialized', data)
     this.send(data)
+
     return
   }
 
-  logger.debug('Signing payload: ', { payload: data, jose: this.jose })
+  logger.debug('Signing payload: ', { payload: data, jose: this.identity })
 
-  const jws = await sign(this.jose.key, {
-    payload: JSON.parse(data.toString()),
-  })
+  // const jws = await sign(this.identity.key, {
+  //   payload: JSON.parse(data.toString()),
+  // })
 
-  logger.debug('Sending', jws)
+  // logger.debug('Sending', jws)
 
-  this.send(jws)
+  this.send(data)
 }

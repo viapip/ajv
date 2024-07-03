@@ -1,16 +1,16 @@
-import { IJoseVerify } from '../jose/types'
+import type { IdentityInstance } from '@orbitdb/core'
 
 declare module 'ws' {
   export interface WebSocketServer {
-    jose?: IJoseVerify
+    identity?: IdentityInstance
   }
   export interface WebSocket {
-    jose?: IJoseVerify
+    identity?: IdentityInstance
   }
 }
 
 declare global {
   export interface WebSocket {
-    jose?: IJoseVerify
+    identity?: IdentityInstance
   }
 }

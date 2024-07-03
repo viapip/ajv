@@ -51,6 +51,7 @@
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-wasm": "^6.2.2",
     "consola": "^3.2.3",
     "cross-env": "7.0.3",
     "defu": "^6.1.4",

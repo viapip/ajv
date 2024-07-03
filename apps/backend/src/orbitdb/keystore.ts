@@ -26,6 +26,7 @@ const identities = await Identities({ keystore, ipfs })
 const provider = PublicKeyIdentityProvider({ keystore })
 
 const identity = await identities.createIdentity({ id, provider })
+
 const result = await identities.getIdentity(identity.hash)
 
 // logger.info('result', result)
@@ -50,7 +51,7 @@ const db = await orbit.open('test', {
 for (let i = 0; i < 10; i++) {
   await db.add({ message: `Hello, world! ${i}` })
 
-logger.info('db', db.address)}
-
+  logger.info('db', db.address)
+}
 
 // await ipfs.stop()
