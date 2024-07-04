@@ -60,6 +60,7 @@
     "blockstore-level": "^1.1.8",
     "c12": "^1.11.1",
     "chalk": "^5.3.0",
+    "consola": "^3.2.3",
     "cross-env": "7.0.3",
     "defu": "^6.1.4",
     "dotenv": "^16.4.5",
@@ -74,6 +75,7 @@
   "devDependencies": {
     "@regioni/build": "workspace:^",
     "@regioni/lib": "workspace:^",
+    "@types/elliptic": "^6",
     "@types/orbitdb__core": "workspace:^",
     "tsx": "^4.7.2"
   }

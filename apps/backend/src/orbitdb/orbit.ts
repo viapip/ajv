@@ -2,19 +2,19 @@ import { bitswap } from '@helia/block-brokers'
 import {
   createOrbitDB,
 } from '@orbitdb/core'
+import { createLogger } from '@regioni/lib/logger'
 import { LevelBlockstore } from 'blockstore-level'
 import { createHelia } from 'helia'
 import { createLibp2p } from 'libp2p'
 
 import { DefaultLibp2pBrowserOptions, DefaultLibp2pOptions } from './config'
-import initLogger  from '@regioni/lib/logger'
 
 import type {
   CreateOrbitDBOptions,
   OrbitDBInstance,
 } from '@orbitdb/core'
 
-const logger = initLogger()
+const logger = createLogger()
 
 let spied: any
 

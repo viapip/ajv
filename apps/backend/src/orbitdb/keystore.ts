@@ -27,11 +27,7 @@ const provider = PublicKeyIdentityProvider({ keystore })
 
 const identity = await identities.createIdentity({ id, provider })
 
-const result = await identities.getIdentity(identity.hash)
-
-// logger.info('result', result)
 logger.info('privateKey', await keystore.getKey(identity.id))
-// logger.info('address', ipfs.libp2p.peerId)
 
 const orbit = await createOrbitDB({
   id: 'orbitdb-AAA',
@@ -54,4 +50,4 @@ for (let i = 0; i < 10; i++) {
   logger.info('db', db.address)
 }
 
-// await ipfs.stop()
+await ipfs.stop()
