@@ -95,10 +95,12 @@
     "ajv-i18n": "^4.2.0",
     "ajv-keywords": "^5.1.0",
     "bullmq": "^5.8.2",
+    "elliptic": "^6.5.5",
     "fast-glob": "^3.3.2",
     "helia": "^4.2.4",
     "jose": "^5.6.2",
     "mongodb": "^6.8.0",
+    "redis": "^4.6.14",
     "superjson": "^2.2.1",
     "winston": "^3.13.0",
     "ws": "^8.16.0"
